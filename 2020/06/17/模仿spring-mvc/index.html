@@ -20,30 +20,37 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="工作学习笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="shoufengsfsf.github.io">
-<meta property="og:url" content="https://shoufengsfsf.github.io/index.html">
+  <meta name="description" content="模仿spring-mvc实现思路 自定义配置配置 application.properties 文件为了解析方便，我们用 application.properties 来代替 application.xml 文件，具体配置内容如下： scanPackage&#x3D;com.shoufeng.demo 配置 web.xml 文件大家都知道，所有依赖于 web 容器的项目，都是从读取 web.xml 文件开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模仿spring-mvc">
+<meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/17/%E6%A8%A1%E4%BB%BFspring-mvc/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="工作学习笔记">
+<meta property="og:description" content="模仿spring-mvc实现思路 自定义配置配置 application.properties 文件为了解析方便，我们用 application.properties 来代替 application.xml 文件，具体配置内容如下： scanPackage&#x3D;com.shoufeng.demo 配置 web.xml 文件大家都知道，所有依赖于 web 容器的项目，都是从读取 web.xml 文件开始">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvnfa3619j31gm0tie81.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvog5hpifj31h50u0kbt.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvogof4xpj31j80to77l.jpg">
+<meta property="article:published_time" content="2020-06-17T14:17:59.000Z">
+<meta property="article:modified_time" content="2020-06-17T14:57:05.272Z">
 <meta property="article:author" content="shoufeng">
+<meta property="article:tag" content="模仿spring-mvc">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvnfa3619j31gm0tie81.jpg">
 
-<link rel="canonical" href="https://shoufengsfsf.github.io/">
+<link rel="canonical" href="https://shoufengsfsf.github.io/2020/06/17/%E6%A8%A1%E4%BB%BFspring-mvc/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>shoufengsfsf.github.io</title>
+  <title>模仿spring-mvc | shoufengsfsf.github.io</title>
   
 
 
@@ -179,9 +186,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -197,10 +205,9 @@
       <meta itemprop="name" content="shoufengsfsf.github.io">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/17/%E6%A8%A1%E4%BB%BFspring-mvc/" class="post-title-link" itemprop="url">模仿spring-mvc</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          模仿spring-mvc
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -233,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="模仿spring-mvc"><a href="#模仿spring-mvc" class="headerlink" title="模仿spring-mvc"></a>模仿spring-mvc</h1><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvnfa3619j31gm0tie81.jpg" alt="image-20200617222032762"></p>
+        <h1 id="模仿spring-mvc"><a href="#模仿spring-mvc" class="headerlink" title="模仿spring-mvc"></a>模仿spring-mvc</h1><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvnfa3619j31gm0tie81.jpg" alt="image-20200617222032762"></p>
 <h2 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h2><h3 id="配置-application-properties-文件"><a href="#配置-application-properties-文件" class="headerlink" title="配置 application.properties 文件"></a>配置 application.properties 文件</h3><p>为了解析方便，我们用 application.properties 来代替 application.xml 文件，具体配置内容如下：</p>
 <p>scanPackage=com.shoufeng.demo</p>
 <h3 id="配置-web-xml-文件"><a href="#配置-web-xml-文件" class="headerlink" title="配置 web.xml 文件"></a>配置 web.xml 文件</h3><p>大家都知道，所有依赖于 web 容器的项目，都是从读取 web.xml 文件开始的。我们先配置好 web.xml 中的内容。 </p>
@@ -255,159 +262,33 @@
 <h2 id="运行效果演示"><a href="#运行效果演示" class="headerlink" title="运行效果演示"></a>运行效果演示</h2><h3 id="启动tomcat"><a href="#启动tomcat" class="headerlink" title="启动tomcat"></a>启动tomcat</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvog5hpifj31h50u0kbt.jpg" alt="image-20200617225559239"></p>
 <h3 id="访问接口"><a href="#访问接口" class="headerlink" title="访问接口"></a>访问接口</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvogof4xpj31j80to77l.jpg" alt="image-20200617225629999"></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E6%A8%A1%E4%BB%BFspring-mvc/" rel="tag"># 模仿spring-mvc</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="shoufeng">
-      <meta itemprop="description" content="工作学习笔记">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="shoufengsfsf.github.io">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/" class="post-title-link" itemprop="url">Synchronized同步锁</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-17 18:45:29" itemprop="dateCreated datePublished" datetime="2020-06-17T18:45:29+08:00">2020-06-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/" rel="prev" title="Synchronized同步锁">
+      <i class="fa fa-chevron-left"></i> Synchronized同步锁
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/17/%E4%B9%90%E8%A7%82%E9%94%81%E3%80%81%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="shoufeng">
-      <meta itemprop="description" content="工作学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="shoufengsfsf.github.io">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/17/%E4%B9%90%E8%A7%82%E9%94%81%E3%80%81%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81/" class="post-title-link" itemprop="url">乐观锁、悲观锁、自旋锁</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-17 18:39:45 / 修改时间：18:45:02" itemprop="dateCreated datePublished" datetime="2020-06-17T18:39:45+08:00">2020-06-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/juc/" itemprop="url" rel="index"><span itemprop="name">juc</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="乐观锁、悲观锁、自旋锁"><a href="#乐观锁、悲观锁、自旋锁" class="headerlink" title="乐观锁、悲观锁、自旋锁"></a>乐观锁、悲观锁、自旋锁</h1><h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a><strong>乐观锁</strong></h2><p>乐观锁是一种乐观思想，即认为读多写少，遇到并发写的可能性低，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，采取在写时先读出当前版本号，然后加锁操作（比较跟上一次的版本号，如果一样则更新），如果失败则要重复读-比较-写的操作。</p>
-<p>java 中的乐观锁基本都是通过 CAS 操作实现的，CAS 是一种更新的原子操作，比较当前值跟传入值是否一样，一样则更新，否则失败。</p>
-<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a><strong>悲观锁</strong></h2><p>悲观锁是就是悲观思想，即认为写多，遇到并发写的可能性高，每次去拿数据的时候都认为别人会修改，所以每次在读写数据的时候都会上锁，这样别人想读写这个数据就会 block 直到拿到锁。</p>
-<p>java中的悲观锁就是Synchronized,AQS框架下的锁则是先尝试cas乐观锁去获取锁，获取不到，才会转换为悲观锁，如 RetreenLock。</p>
-<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a><strong>自旋锁</strong></h2><p>自旋锁原理非常简单，如果持有锁的线程能在很短时间内释放锁资源，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞挂起状态，它们只需要等一等（自旋），等持有锁的线程释放锁后即可立即获取锁，这样就避免用户线程和内核的切换的消耗。</p>
-<p>线程自旋是需要消耗 cup 的，说白了就是让 cup 在做无用功，如果一直获取不到锁，那线程也不能一直占用 cup 自旋做无用功，所以需要设定一个自旋等待的最大时间。</p>
-<p>如果持有锁的线程执行的时间超过自旋等待的最大时间扔没有释放锁，就会导致其它争用锁的线程在最大等待时间内还是获取不到锁，这时争用线程会停止自旋进入阻塞状态。</p>
-<h3 id="自旋锁的优缺点"><a href="#自旋锁的优缺点" class="headerlink" title="自旋锁的优缺点"></a><strong>自旋锁的优缺点</strong></h3><p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！</p>
-<p>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，占着 XX 不 XX，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cup 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁；自旋锁时间阈值（1.6 引入了适应性自旋锁）自旋锁的目的是为了占着 CPU 的资源不释放，等到获取到锁立即进行处理。但是如何去选择自旋的执行时间呢？如果自旋执行时间太长，会有大量的线程处于自旋状态占用 CPU 资源，进而会影响整体系统的性能。因此自旋的周期选的额外重要！</p>
-<p>JVM 对于自旋周期的选择，jdk1.5 这个限度是一定的写死的，在 1.6 引入了适应性自旋锁，适应性自旋锁意味着自旋的时间不在是固定的了，而是由前一次在同一个锁上的自旋时间以及锁的拥有者的状态来决定，基本认为一个线程上下文切换的时间是最佳的一个时间，同时 JVM 还针对当前 CPU 的负荷情况做了较多的优化，如果平均负载小于 CPUs 则一直自旋，如果有超过(CPUs/2)个线程正在自旋，则后来线程直接阻塞，如果正在自旋的线程发现 Owner 发生了变化则延迟自旋时间（自旋计数）或进入阻塞，如果 CPU 处于节电模式则停止自旋，自旋时间的最坏情况是 CPU的存储延迟（CPU A 存储了一个数据，到 CPU B 得知这个数据直接的时间差），自旋时会适当放弃线程优先级之间的差异。</p>
-<p><strong>自旋锁的开启</strong></p>
-<p>JDK1.6 中-XX:+UseSpinning 开启；</p>
-<p>-XX:PreBlockSpin=10 为自旋次数；</p>
-<p>JDK1.7 后，去掉此参数，由 jvm 控制；</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -460,6 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模仿spring-mvc"><span class="nav-number">1.</span> <span class="nav-text">模仿spring-mvc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">1.1.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义配置"><span class="nav-number">1.2.</span> <span class="nav-text">自定义配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-application-properties-文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置 application.properties 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-web-xml-文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">配置 web.xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义-Annotation"><span class="nav-number">1.2.3.</span> <span class="nav-text">自定义 Annotation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SFAutowired-注解："><span class="nav-number">1.2.3.1.</span> <span class="nav-text">@SFAutowired 注解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SFController-注解："><span class="nav-number">1.2.3.2.</span> <span class="nav-text">@SFController 注解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SFRequestMapping-注解："><span class="nav-number">1.2.3.3.</span> <span class="nav-text">@SFRequestMapping 注解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SFRequestParam-注解："><span class="nav-number">1.2.3.4.</span> <span class="nav-text">@SFRequestParam 注解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SFService-注解："><span class="nav-number">1.2.3.5.</span> <span class="nav-text">@SFService 注解：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器初始化"><span class="nav-number">1.3.</span> <span class="nav-text">容器初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行效果演示"><span class="nav-number">1.4.</span> <span class="nav-text">运行效果演示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动tomcat"><span class="nav-number">1.4.1.</span> <span class="nav-text">启动tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问接口"><span class="nav-number">1.4.2.</span> <span class="nav-text">访问接口</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
