@@ -185,6 +185,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/18/spring-ioc%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="shoufeng">
+      <meta itemprop="description" content="工作学习笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shoufengsfsf.github.io">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/18/spring-ioc%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">spring-ioc运行时序解析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-18 09:38:26 / 修改时间：15:20:27" itemprop="dateCreated datePublished" datetime="2020-06-18T09:38:26+08:00">2020-06-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">spring源码解读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="spring-ioc运行时序解析"><a href="#spring-ioc运行时序解析" class="headerlink" title="spring-ioc运行时序解析"></a>spring-ioc运行时序解析</h1><h2 id="Spring-核心之-IOC-容器初体验"><a href="#Spring-核心之-IOC-容器初体验" class="headerlink" title="Spring 核心之 IOC 容器初体验"></a>Spring 核心之 IOC 容器初体验</h2><h3 id="再谈-IOC-与-DI"><a href="#再谈-IOC-与-DI" class="headerlink" title="再谈 IOC 与 DI"></a><strong>再谈 IOC 与 DI</strong></h3><p><strong>IOC</strong>(Inversion of Control)控制反转：所谓控制反转，就是把原先我们代码里面需要实现的对象创 建、依赖的代码，反转给容器来帮忙实现。那么必然的我们需要创建一个容器，同时需要一种描述来让 容器知道需要创建的对象与对象的关系。这个描述最具体表现就是我们所看到的配置文件。 </p>
+<p><strong>DI</strong>(Dependency Injection)依赖注入：就是指对象是被动接受依赖类而不是自己主动去找，换句话说就 是指对象不是从容器中查找它依赖的类，而是在容器实例化对象的时候主动将它依赖的类注入给它。</p>
+<h3 id="Spring-核心容器类图"><a href="#Spring-核心容器类图" class="headerlink" title="Spring 核心容器类图"></a><strong>Spring 核心容器类图</strong></h3><h4 id="1、BeanFactory"><a href="#1、BeanFactory" class="headerlink" title="1、BeanFactory"></a><strong>1、BeanFactory</strong></h4><p>Spring Bean 的创建是典型的工厂模式，这一系列的 Bean 工厂，也即 IOC 容器为开发者管理对象间的依赖关系提供了很多便利和基础服务，在 Spring 中有许多的 IOC 容器的实现供用户选择和使用，其相互关系如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfw7h16t9ej317m0lg7ir.jpg" alt="image-20200618095413402"></p>
+<p>其中 BeanFactory 作为最顶层的一个接口类，它定义了 IOC 容器的基本功能规范，BeanFactory 有三 个重要的子类：ListableBeanFactory、HierarchicalBeanFactory 和 AutowireCapableBeanFactory。 但是从类图中我们可以发现最终的默认实现类是 DefaultListableBeanFactory，它实现了所有的接口。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/17/%E6%A8%A1%E4%BB%BFspring-mvc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -299,6 +371,22 @@
 
               <time title="创建时间：2020-06-17 18:45:29" itemprop="dateCreated datePublished" datetime="2020-06-17T18:45:29+08:00">2020-06-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-18 15:49:21" itemprop="dateModified" datetime="2020-06-18T15:49:21+08:00">2020-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/juc/" itemprop="url" rel="index"><span itemprop="name">juc</span></a>
+                </span>
+            </span>
 
           
 
@@ -311,7 +399,55 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="Synchronized同步锁"><a href="#Synchronized同步锁" class="headerlink" title="Synchronized同步锁"></a>Synchronized同步锁</h1><p>synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。</p>
+<h2 id="Synchronized-作用范围"><a href="#Synchronized-作用范围" class="headerlink" title="Synchronized 作用范围"></a><strong>Synchronized</strong> <strong>作用范围</strong></h2><ol>
+<li><p>作用于方法时，锁住的是对象的实例(this)；</p>
+</li>
+<li><p>当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；</p>
+</li>
+<li><p>synchronized 作用于一个对象实例时，锁住的是所有以该对象为锁的代码块。它有多个队列，当多个线程一起访问某个对象监视器的时候，对象监视器会将这些线程存储在不同的容器中。</p>
+</li>
+</ol>
+<h2 id="Synchronized-核心组件"><a href="#Synchronized-核心组件" class="headerlink" title="Synchronized 核心组件"></a><strong>Synchronized</strong> <strong>核心组件</strong></h2><ol>
+<li><p>Wait Set：哪些调用 wait 方法被阻塞的线程被放置在这里；</p>
+</li>
+<li><p>Contention List：竞争队列，所有请求锁的线程首先被放在这个竞争队列中；</p>
+</li>
+<li><p>Entry List：Contention List 中那些有资格成为候选资源的线程被移动到 Entry List 中；</p>
+</li>
+<li><p>OnDeck：任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为 OnDeck；</p>
+</li>
+<li><p>Owner：当前已经获取到所资源的线程被称为 Owner；</p>
+</li>
+<li><p>!Owner：当前释放锁的线程。</p>
+</li>
+</ol>
+<h2 id="Synchronized-实现"><a href="#Synchronized-实现" class="headerlink" title="Synchronized 实现"></a><strong>Synchronized</strong> <strong>实现</strong></h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg" alt="image-20200618154736405"></p>
+<ol>
+<li><p>JVM 每次从队列的尾部取出一个数据用于锁竞争候选者（OnDeck），但是并发情况下，ContentionList 会被大量的并发线程进行 CAS 访问，为了降低对尾部元素的竞争，JVM 会将一部分线程移动到 EntryList 中作为候选竞争线程。</p>
+</li>
+<li><p>Owner 线程会在 unlock 时，将 ContentionList 中的部分线程迁移到 EntryList 中，并指定EntryList 中的某个线程为 OnDeck 线程（一般是最先进去的那个线程）。</p>
+</li>
+<li><p>Owner 线程并不直接把锁传递给 OnDeck 线程，而是把锁竞争的权利交给 OnDeck，OnDeck 需要重新竞争锁。这样虽然牺牲了一些公平性，但是能极大的提升系统的吞吐量，在JVM 中，也把这种选择行为称之为“竞争切换”。</p>
+</li>
+<li><p>OnDeck 线程获取到锁资源后会变为 Owner 线程，而没有得到锁资源的仍然停留在 EntryList中。如果 Owner 线程被 wait 方法阻塞，则转移到 WaitSet 队列中，直到某个时刻通过 notify或者 notifyAll 唤醒，会重新进去 EntryList 中。</p>
+</li>
+<li><p>处于 ContentionList、EntryList、WaitSet 中的线程都处于阻塞状态，该阻塞是由操作系统来完成的（Linux 内核下采用 pthread_mutex_lock 内核函数实现的）。</p>
+</li>
+<li><p>Synchronized 是非公平锁。 Synchronized 在线程进入 ContentionList 时，等待的线程会先尝试自旋获取锁，如果获取不到就进入 ContentionList，这明显对于已经进入队列的线程是不公平的，还有一个不公平的事情就是自旋获取锁的线程还可能直接抢占 OnDeck 线程的锁资源。参考：<a href="https://blog.csdn.net/zqz_zqz/article/details/70233767" target="_blank" rel="noopener">https://blog.csdn.net/zqz_zqz/article/details/70233767</a></p>
+</li>
+<li><p>每个对象都有个 monitor 对象，加锁就是在竞争 monitor 对象，代码块加锁是在前后分别加上 monitorenter 和 monitorexit 指令来实现的，方法加锁是通过一个标记位来判断的</p>
+</li>
+<li><p>synchronized 是一个重量级操作，需要调用操作系统相关接口，性能是低效的，有可能给线程加锁消耗的时间比有用操作消耗的时间更多。</p>
+</li>
+<li><p>Java1.6，synchronized 进行了很多的优化，有适应自旋、锁消除、锁粗化、轻量级锁及偏向锁等，效率有了本质上的提高。在之后推出的 Java1.7 与 1.8 中，均对该关键字的实现机理做了优化。引入了偏向锁和轻量级锁。都是在对象头中有标记位，不需要经过操作系统加锁。</p>
+</li>
+<li><p>锁可以从偏向锁升级到轻量级锁，再升级到重量级锁。这种升级过程叫做锁膨胀；</p>
+</li>
+<li><p>JDK 1.6 中默认是开启偏向锁和轻量级锁，可以通过-XX:-UseBiasedLocking 来禁用偏向锁。</p>
+</li>
+</ol>
+
       
     </div>
 
@@ -473,7 +609,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -486,7 +622,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
