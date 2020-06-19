@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/18/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99-1/">
+    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/19/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,7 +199,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/18/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99-1/" class="post-title-link" itemprop="url">软件架构设计的七大原则</a>
+            <a href="/2020/06/19/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">工厂模式</a>
         </h2>
 
         <div class="post-meta">
@@ -208,8 +208,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-06-18 17:51:52" itemprop="dateCreated datePublished" datetime="2020-06-18T17:51:52+08:00">2020-06-18</time>
+              <time title="创建时间：2020-06-19 09:39:14 / 修改时间：09:54:54" itemprop="dateCreated datePublished" datetime="2020-06-19T09:39:14+08:00">2020-06-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
             </span>
 
           
@@ -223,7 +233,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1>
       
     </div>
 
@@ -265,10 +275,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-18 17:14:00 / 修改时间：17:51:40" itemprop="dateCreated datePublished" datetime="2020-06-18T17:14:00+08:00">2020-06-18</time>
+              <time title="创建时间：2020-06-18 17:14:00" itemprop="dateCreated datePublished" datetime="2020-06-18T17:14:00+08:00">2020-06-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-19 09:55:06" itemprop="dateModified" datetime="2020-06-19T09:55:06+08:00">2020-06-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -439,6 +455,107 @@
 </li>
 </ol>
 <h2 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a><strong>合成复用原则</strong></h2><p>合成复用原则（Composite/Aggregate Reuse Principle,CARP）是指尽量使用对象组合(has-a)/聚合(contanis-a)，而不是继承关系达到软件复用的目的。可以使系统更加灵 活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少。 继承我们叫做白箱复用，相当于把所有的实现细节暴露给子类。组合/聚合也称之为黑箱 复用，对类以外的对象是无法获取到实现细节的。要根据具体的业务场景来做代码设计，其实也都需要遵循 OOP 模型。</p>
+<h2 id="经典框架都在用设计模式解决问题"><a href="#经典框架都在用设计模式解决问题" class="headerlink" title="经典框架都在用设计模式解决问题"></a><strong>经典框架都在用设计模式解决问题</strong></h2><p>Spring 就是一个把设计模式用得淋漓尽致的经典框架，其实从类的命名就能看出来，我来一一列举：</p>
+<table>
+<thead>
+<tr>
+<th>设计模式名称</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工厂模式</td>
+<td>BeanFactory</td>
+</tr>
+<tr>
+<td>装饰器模式</td>
+<td>BeanWrapper</td>
+</tr>
+<tr>
+<td>代理模式</td>
+<td>AopProxy</td>
+</tr>
+<tr>
+<td>委派模式</td>
+<td>DispatcherServlet</td>
+</tr>
+<tr>
+<td>策略模式</td>
+<td>HandlerMapping</td>
+</tr>
+<tr>
+<td>适配器模式</td>
+<td>HandlerAdapter</td>
+</tr>
+<tr>
+<td>模板模式</td>
+<td>JdbcTemplate</td>
+</tr>
+<tr>
+<td>观察者模式</td>
+<td>ContextLoaderListener</td>
+</tr>
+</tbody></table>
+<p>需要特别声明的是，设计模式从来都不是单个设计模式独立使用的。在实际应用中，通 常是多个设计模式混合使用，你中有我，我中有你。我们的课程中，会围绕 Spring 的 IOC、 AOP、MVC、JDBC 这样的思路展开，根据其设计类型来设计讲解顺序:</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>英文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建型模式</td>
+<td>工厂模式</td>
+<td>Factory Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>单例模式</td>
+<td>Singleton Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>原型模式</td>
+<td>Prototype Pattern</td>
+</tr>
+<tr>
+<td>结构型模式</td>
+<td>适配器模式</td>
+<td>Adapter Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>装饰器模式</td>
+<td>Decorator Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>代理模式</td>
+<td>Proxy Pattern</td>
+</tr>
+<tr>
+<td>行为性模式</td>
+<td>策略模式</td>
+<td>Strategy Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>模板模式</td>
+<td>Template Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>委派模式</td>
+<td>Delegate Pattern</td>
+</tr>
+<tr>
+<td></td>
+<td>观察者模式</td>
+<td>Observer Pattern</td>
+</tr>
+</tbody></table>
 
       
     </div>
