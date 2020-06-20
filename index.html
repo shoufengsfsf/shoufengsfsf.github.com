@@ -185,6 +185,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="shoufeng">
+      <meta itemprop="description" content="工作学习笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shoufengsfsf.github.io">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">单例模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-20 09:44:59 / 修改时间：10:25:31" itemprop="dateCreated datePublished" datetime="2020-06-20T09:44:59+08:00">2020-06-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="单例模式的应用场景"><a href="#单例模式的应用场景" class="headerlink" title="单例模式的应用场景"></a><strong>单例模式的应用场景</strong></h2><p>单例模式(Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并 提供一个全局访问点。单例模式是创建型模式。单例模式在现实生活中应用也非常广泛。 例如，国家主席、公司 CEO、部门经理等。在 J2EE 标准中，ServletContext、 ServletContextConfig 等;在 Spring 框架应用中 ApplicationContext;数据库的连接 池也都是单例形式。</p>
+<h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a><strong>饿汉式单例</strong></h2><p>先来看单例模式的类结构图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfyiiaqxqmj30gk08igpd.jpg" alt="image-20200620094709265"></p>
+<p>饿汉式单例是在类加载的时候就立即初始化，并且创建单例对象。绝对线程安全，在线 程还没出现以前就是实例化了，不可能存在访问安全问题。 优点:没有加任何的锁、执行效率比较高，在用户体验上来说，比懒汉式更好。 缺点:类加载的时候就初始化，不管用与不用都占着空间，浪费了内存，有可能占着茅 坑不拉屎。</p>
+<p>Spring 中 IOC 容器 ApplicationContext 本身就是典型的饿汉式单例。接下来看一段代 码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span> </span>&#123; </span><br><span class="line">  <span class="comment">//先静态、后动态 </span></span><br><span class="line">  <span class="comment">//先属性、后方法</span></span><br><span class="line">  <span class="comment">//先上后下</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungrySingleton hungrySingleton = <span class="keyword">new</span> HungrySingleton();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> hungrySingleton;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有另外一种写法，利用静态代码块的机制:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//饿汉式静态块单例</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungryStaticSingleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungryStaticSingleton hungrySingleton;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    hungrySingleton = <span class="keyword">new</span> HungryStaticSingleton();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">HungryStaticSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungryStaticSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hungrySingleton; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两种写法都非常的简单，也非常好理解，饿汉式适用在单例对象较少的情况。下面我 们来看性能更优的写法。</p>
+<h2 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a><strong>懒汉式单例</strong></h2><p>懒汉式单例的特点是:被外部类调用的时候内部类才会加载，下面看懒汉式单例的简单 实现 LazySimpleSingleton:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//懒汉式单例 </span></span><br><span class="line"><span class="comment">//在外部需要使用的时候才进行实例化 </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySimpleSingleton</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazySimpleSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125; </span><br><span class="line">  <span class="comment">//静态块，公共内存区域</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> LazySimpleSingleton lazy = <span class="keyword">null</span>; </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySimpleSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">      lazy = <span class="keyword">new</span> LazySimpleSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazy; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后写一个线程类 ExectorThread 类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExectorThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123; </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    LazySimpleSingleton singleton = LazySimpleSingleton.getInstance();</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">":"</span> + singleton);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端测试代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySimpleSingletonTest</span> </span>&#123; </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ExectorThread()); </span><br><span class="line">     Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ExectorThread()); </span><br><span class="line">     t1.start();</span><br><span class="line">     t2.start();</span><br><span class="line">     System.out.println(<span class="string">"End"</span>); </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一定几率出现创建两个不同结果的情况，意味着上面的单例存在线程安全隐患。</p>
+<h3 id="双重检查锁的单例模式"><a href="#双重检查锁的单例模式" class="headerlink" title="双重检查锁的单例模式"></a>双重检查锁的单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyDoubleCheckSingleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyDoubleCheckSingleton lazy = <span class="keyword">null</span>;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazyDoubleCheckSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyDoubleCheckSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (LazyDoubleCheckSingleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">          lazy = <span class="keyword">new</span> LazyDoubleCheckSingleton(); </span><br><span class="line">          <span class="comment">//1.分配内存给这个对象</span></span><br><span class="line">          <span class="comment">//2.初始化对象</span></span><br><span class="line">          <span class="comment">//3.设置 lazy 指向刚分配的内存地址</span></span><br><span class="line">        &#125; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazy; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="静态内部类的单例模式"><a href="#静态内部类的单例模式" class="headerlink" title="静态内部类的单例模式"></a>静态内部类的单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题 //完美地屏蔽了这两个缺点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingleton</span> </span>&#123;</span><br><span class="line">  <span class="comment">//默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类</span></span><br><span class="line">  <span class="comment">//如果没使用的话，内部类是不加载的 private LazyInnerClassSingleton()&#123;&#125;</span></span><br><span class="line">  <span class="comment">//每一个关键字都不是多余的</span></span><br><span class="line">  <span class="comment">//static 是为了使单例的空间共享</span></span><br><span class="line">  <span class="comment">//保证这个方法不会被重写，重载</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//在返回结果以前，一定会先加载内部类</span></span><br><span class="line">    <span class="keyword">return</span> LazyHolder.LAZY; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//默认不加载</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton LAZY = <span class="keyword">new</span> LazyInnerClassSingleton(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题。内部类一定是要在方 法调用之前初始化，巧妙地避免了线程安全问题。由于这种方式比较简单，我们就不带 大家一步一步调试了。</p>
+<h2 id="反射破坏单例"><a href="#反射破坏单例" class="headerlink" title="反射破坏单例"></a><strong>反射破坏单例</strong></h2><p>大家有没有发现，上面介绍的单例模式的构造方法除了加上 private 以外，没有做任何处 理。如果我们使用反射来调用其构造方法，然后，再调用 getInstance()方法，应该就会 两个不同的实例。现在来看一段测试代码，以 LazyInnerClassSingleton 为例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingletonTest</span> </span>&#123; </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="comment">//很无聊的情况下，进行破坏</span></span><br><span class="line">      Class&lt;?&gt; clazz = LazyInnerClassSingleton<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">      <span class="comment">//通过反射拿到私有的构造方法</span></span><br><span class="line">      Constructor c = clazz.getDeclaredConstructor(<span class="keyword">null</span>); </span><br><span class="line">      <span class="comment">//强制访问，强吻，不愿意也要吻</span></span><br><span class="line">      c.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">      <span class="comment">//暴力初始化</span></span><br><span class="line">      Object o1 = c.newInstance();</span><br><span class="line">      <span class="comment">//调用了两次构造方法，相当于 new 了两次 //犯了原则性问题，</span></span><br><span class="line">      Object o2 = c.newInstance();</span><br><span class="line">      System.out.println(o1 == o2); </span><br><span class="line">      Object o2 = c.newInstance();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e)&#123; </span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然，是创建了两个不同的实例。现在，我们在其构造方法中做一些限制，一旦出现多 次重复创建，则直接抛出异常。来看优化后的代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//史上最牛 B 的单例模式的实现方式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingleton</span> </span>&#123;</span><br><span class="line">  <span class="comment">//默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类 //如果没使用的话，内部类是不加载的</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazyInnerClassSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(LazyHolder.LAZY != <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不允许创建多个实例"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//每一个关键字都不是多余的</span></span><br><span class="line">  <span class="comment">//static 是为了使单例的空间共享</span></span><br><span class="line">  <span class="comment">//保证这个方法不会被重写，重载</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//在返回结果以前，一定会先加载内部类</span></span><br><span class="line">    <span class="keyword">return</span> LazyHolder.LAZY; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//默认不加载</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton LAZY = <span class="keyword">new</span> LazyInnerClassSingleton(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化破坏单例"><a href="#序列化破坏单例" class="headerlink" title="序列化破坏单例"></a><strong>序列化破坏单例</strong></h2><p>当我们将一个单例对象创建好，有时候需要将对象序列化然后写入到磁盘，下次使用时 再从磁盘中读取到对象，反序列化转化为内存对象。反序列化后的对象会重新分配内存， 即重新创建。那如果序列化的目标的对象为单例对象，就违背了单例模式的初衷，相当 于破坏了单例，来看一段代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//反序列化时导致单例破坏</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="comment">//序列化就是说把内存中的状态通过转换成字节码的形式 </span></span><br><span class="line">  <span class="comment">//从而转换一个 IO 流，写入到其他地方(可以是磁盘、网络 IO) </span></span><br><span class="line">  <span class="comment">//内存中状态给永久保存下来了</span></span><br><span class="line">  <span class="comment">//反序列化</span></span><br><span class="line">  <span class="comment">//讲已经持久化的字节码内容，转换为 IO 流</span></span><br><span class="line">  <span class="comment">//通过 IO 流的读取，进而将读取的内容转换为 Java 对象 </span></span><br><span class="line">  <span class="comment">//在转换过程中会重新创建对象 new</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> SeriableSingleton INSTANCE = <span class="keyword">new</span> SeriableSingleton(); </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SeriableSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SeriableSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写测试代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingletonTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SeriableSingleton s1 = <span class="keyword">null</span>;</span><br><span class="line">    SeriableSingleton s2 = SeriableSingleton.getInstance();</span><br><span class="line">    FileOutputStream fos = <span class="keyword">null</span>; </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      fos = <span class="keyword">new</span> FileOutputStream(<span class="string">"SeriableSingleton.obj"</span>); </span><br><span class="line">      ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(fos); oos.writeObject(s2);</span><br><span class="line">      oos.flush();</span><br><span class="line">      oos.close();</span><br><span class="line">      FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="string">"SeriableSingleton.obj"</span>); </span><br><span class="line">      ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(fis);</span><br><span class="line">      s1 = (SeriableSingleton)ois.readObject();</span><br><span class="line">      ois.close();</span><br><span class="line">      System.out.println(s1); </span><br><span class="line">      System.out.println(s2); </span><br><span class="line">      System.out.println(s1 == s2);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123; </span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从 运行结果中，可以看出，反序列化后的对象和手动创建的对象是不一致的，实例化了两 次，违背了单例的设计初衷。那么，我们如何保证序列化的情况下也能够实现单例?其</p>
+<p>实很简单，只需要增加 readResolve()方法即可。来看优化代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> SeriableSingleton INSTANCE = <span class="keyword">new</span> SeriableSingleton();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SeriableSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SeriableSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> INSTANCE; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/20/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1148,77 +1257,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="shoufeng">
-      <meta itemprop="description" content="工作学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="shoufengsfsf.github.io">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/" class="post-title-link" itemprop="url">ReadWriteLock读写锁</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-18 16:10:20 / 修改时间：16:11:20" itemprop="dateCreated datePublished" datetime="2020-06-18T16:10:20+08:00">2020-06-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/juc/" itemprop="url" rel="index"><span itemprop="name">juc</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
-<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
-<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
-<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1288,7 +1326,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

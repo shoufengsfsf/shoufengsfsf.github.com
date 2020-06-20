@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AtomicInteger</title>
+    <url>/2020/06/18/AtomicInteger/</url>
+    <content><![CDATA[<h1 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><strong>AtomicInteger</strong></h1><p>首先说明，此处 AtomicInteger ，一个提供原子操作的 Integer 的类，常见的还有AtomicBoolean、AtomicInteger、AtomicLong、AtomicReference 等，他们的实现原理相同，区别在与运算对象类型的不同。令人兴奋地，还可以通过 AtomicReference<V>将一个对象的所有操作转化成原子操作。</p>
+<p>我们知道，在多线程程序中，诸如++i 或 i++等运算不具有原子性，是不安全的线程操作之一。通常我们会使用 synchronized 将该操作变成一个原子操作，但 JVM 为此类操作特意提供了一些</p>
+<p>同步类，使得使用更方便，且使程序运行效率变得更高。通过相关资料显示，通常AtomicInteger的性能是 ReentantLock 的好几倍。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Semaphore信号量</title>
     <url>/2020/06/18/Semaphore%E4%BF%A1%E5%8F%B7%E9%87%8F/</url>
     <content><![CDATA[<h1 id="Semaphore信号量"><a href="#Semaphore信号量" class="headerlink" title="Semaphore信号量"></a>Semaphore信号量</h1><p>Semaphore 是一种基于计数的信号量。它可以设定一个阈值，基于此，多个线程竞争获取许可信号，做完自己的申请后归还，超过阈值后，线程申请许可信号将会被阻塞。Semaphore 可以用来构建一些对象池，资源池之类的，比如数据库连接池</p>
@@ -13,6 +27,21 @@
 <h2 id="Semaphore-与-ReentrantLock"><a href="#Semaphore-与-ReentrantLock" class="headerlink" title="Semaphore 与 ReentrantLock"></a><strong>Semaphore</strong> <strong>与</strong> <strong>ReentrantLock</strong></h2><p>Semaphore 基本能完成 ReentrantLock 的所有工作，使用方法也与之类似，通过 acquire()与release()方法来获得和释放临界资源。经实测，Semaphone.acquire()方法默认为可响应中断锁，与 ReentrantLock.lockInterruptibly()作用效果一致，也就是说在等待临界资源的过程中可以被Thread.interrupt()方法中断。</p>
 <p>此外，Semaphore 也实现了可轮询的锁请求与定时锁的功能，除了方法名 tryAcquire 与 tryLock不同，其使用方法与 ReentrantLock 几乎一致。Semaphore 也提供了公平与非公平锁的机制，也可在构造函数中进行设定。</p>
 <p>Semaphore 的锁释放操作也由手动进行，因此与 ReentrantLock 一样，为避免线程因抛出异常而无法正常释放锁的情况发生，释放锁的操作也必须在 finally 代码块中完成。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ReadWriteLock读写锁</title>
+    <url>/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/</url>
+    <content><![CDATA[<h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
+<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
+<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
+<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -99,51 +128,56 @@
       </tags>
   </entry>
   <entry>
-    <title>AtomicInteger</title>
-    <url>/2020/06/18/AtomicInteger/</url>
-    <content><![CDATA[<h1 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><strong>AtomicInteger</strong></h1><p>首先说明，此处 AtomicInteger ，一个提供原子操作的 Integer 的类，常见的还有AtomicBoolean、AtomicInteger、AtomicLong、AtomicReference 等，他们的实现原理相同，区别在与运算对象类型的不同。令人兴奋地，还可以通过 AtomicReference<V>将一个对象的所有操作转化成原子操作。</p>
-<p>我们知道，在多线程程序中，诸如++i 或 i++等运算不具有原子性，是不安全的线程操作之一。通常我们会使用 synchronized 将该操作变成一个原子操作，但 JVM 为此类操作特意提供了一些</p>
-<p>同步类，使得使用更方便，且使程序运行效率变得更高。通过相关资料显示，通常AtomicInteger的性能是 ReentantLock 的好几倍。</p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ReadWriteLock读写锁</title>
-    <url>/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/</url>
-    <content><![CDATA[<h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
-<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
-<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
-<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>乐观锁、悲观锁、自旋锁</title>
-    <url>/2020/06/17/%E4%B9%90%E8%A7%82%E9%94%81%E3%80%81%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81/</url>
-    <content><![CDATA[<h1 id="乐观锁、悲观锁、自旋锁"><a href="#乐观锁、悲观锁、自旋锁" class="headerlink" title="乐观锁、悲观锁、自旋锁"></a>乐观锁、悲观锁、自旋锁</h1><h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a><strong>乐观锁</strong></h2><p>乐观锁是一种乐观思想，即认为读多写少，遇到并发写的可能性低，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，采取在写时先读出当前版本号，然后加锁操作（比较跟上一次的版本号，如果一样则更新），如果失败则要重复读-比较-写的操作。</p>
-<p>java 中的乐观锁基本都是通过 CAS 操作实现的，CAS 是一种更新的原子操作，比较当前值跟传入值是否一样，一样则更新，否则失败。</p>
-<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a><strong>悲观锁</strong></h2><p>悲观锁是就是悲观思想，即认为写多，遇到并发写的可能性高，每次去拿数据的时候都认为别人会修改，所以每次在读写数据的时候都会上锁，这样别人想读写这个数据就会 block 直到拿到锁。</p>
-<p>java中的悲观锁就是Synchronized,AQS框架下的锁则是先尝试cas乐观锁去获取锁，获取不到，才会转换为悲观锁，如 RetreenLock。</p>
-<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a><strong>自旋锁</strong></h2><p>自旋锁原理非常简单，如果持有锁的线程能在很短时间内释放锁资源，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞挂起状态，它们只需要等一等（自旋），等持有锁的线程释放锁后即可立即获取锁，这样就避免用户线程和内核的切换的消耗。</p>
-<p>线程自旋是需要消耗 cup 的，说白了就是让 cup 在做无用功，如果一直获取不到锁，那线程也不能一直占用 cup 自旋做无用功，所以需要设定一个自旋等待的最大时间。</p>
-<p>如果持有锁的线程执行的时间超过自旋等待的最大时间扔没有释放锁，就会导致其它争用锁的线程在最大等待时间内还是获取不到锁，这时争用线程会停止自旋进入阻塞状态。</p>
-<h3 id="自旋锁的优缺点"><a href="#自旋锁的优缺点" class="headerlink" title="自旋锁的优缺点"></a><strong>自旋锁的优缺点</strong></h3><p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！</p>
-<p>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，占着 XX 不 XX，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cup 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁；自旋锁时间阈值（1.6 引入了适应性自旋锁）自旋锁的目的是为了占着 CPU 的资源不释放，等到获取到锁立即进行处理。但是如何去选择自旋的执行时间呢？如果自旋执行时间太长，会有大量的线程处于自旋状态占用 CPU 资源，进而会影响整体系统的性能。因此自旋的周期选的额外重要！</p>
-<p>JVM 对于自旋周期的选择，jdk1.5 这个限度是一定的写死的，在 1.6 引入了适应性自旋锁，适应性自旋锁意味着自旋的时间不在是固定的了，而是由前一次在同一个锁上的自旋时间以及锁的拥有者的状态来决定，基本认为一个线程上下文切换的时间是最佳的一个时间，同时 JVM 还针对当前 CPU 的负荷情况做了较多的优化，如果平均负载小于 CPUs 则一直自旋，如果有超过(CPUs/2)个线程正在自旋，则后来线程直接阻塞，如果正在自旋的线程发现 Owner 发生了变化则延迟自旋时间（自旋计数）或进入阻塞，如果 CPU 处于节电模式则停止自旋，自旋时间的最坏情况是 CPU的存储延迟（CPU A 存储了一个数据，到 CPU B 得知这个数据直接的时间差），自旋时会适当放弃线程优先级之间的差异。</p>
-<p><strong>自旋锁的开启</strong></p>
-<p>JDK1.6 中-XX:+UseSpinning 开启；</p>
-<p>-XX:PreBlockSpin=10 为自旋次数；</p>
-<p>JDK1.7 后，去掉此参数，由 jvm 控制；</p>
+    <title>Synchronized同步锁</title>
+    <url>/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/</url>
+    <content><![CDATA[<h1 id="Synchronized同步锁"><a href="#Synchronized同步锁" class="headerlink" title="Synchronized同步锁"></a>Synchronized同步锁</h1><p>synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。</p>
+<h2 id="Synchronized-作用范围"><a href="#Synchronized-作用范围" class="headerlink" title="Synchronized 作用范围"></a><strong>Synchronized</strong> <strong>作用范围</strong></h2><ol>
+<li><p>作用于方法时，锁住的是对象的实例(this)；</p>
+</li>
+<li><p>当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；</p>
+</li>
+<li><p>synchronized 作用于一个对象实例时，锁住的是所有以该对象为锁的代码块。它有多个队列，当多个线程一起访问某个对象监视器的时候，对象监视器会将这些线程存储在不同的容器中。</p>
+</li>
+</ol>
+<h2 id="Synchronized-核心组件"><a href="#Synchronized-核心组件" class="headerlink" title="Synchronized 核心组件"></a><strong>Synchronized</strong> <strong>核心组件</strong></h2><ol>
+<li><p>Wait Set：哪些调用 wait 方法被阻塞的线程被放置在这里；</p>
+</li>
+<li><p>Contention List：竞争队列，所有请求锁的线程首先被放在这个竞争队列中；</p>
+</li>
+<li><p>Entry List：Contention List 中那些有资格成为候选资源的线程被移动到 Entry List 中；</p>
+</li>
+<li><p>OnDeck：任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为 OnDeck；</p>
+</li>
+<li><p>Owner：当前已经获取到所资源的线程被称为 Owner；</p>
+</li>
+<li><p>!Owner：当前释放锁的线程。</p>
+</li>
+</ol>
+<h2 id="Synchronized-实现"><a href="#Synchronized-实现" class="headerlink" title="Synchronized 实现"></a><strong>Synchronized</strong> <strong>实现</strong></h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg" alt="image-20200618154736405"></p>
+<ol>
+<li><p>JVM 每次从队列的尾部取出一个数据用于锁竞争候选者（OnDeck），但是并发情况下，ContentionList 会被大量的并发线程进行 CAS 访问，为了降低对尾部元素的竞争，JVM 会将一部分线程移动到 EntryList 中作为候选竞争线程。</p>
+</li>
+<li><p>Owner 线程会在 unlock 时，将 ContentionList 中的部分线程迁移到 EntryList 中，并指定EntryList 中的某个线程为 OnDeck 线程（一般是最先进去的那个线程）。</p>
+</li>
+<li><p>Owner 线程并不直接把锁传递给 OnDeck 线程，而是把锁竞争的权利交给 OnDeck，OnDeck 需要重新竞争锁。这样虽然牺牲了一些公平性，但是能极大的提升系统的吞吐量，在JVM 中，也把这种选择行为称之为“竞争切换”。</p>
+</li>
+<li><p>OnDeck 线程获取到锁资源后会变为 Owner 线程，而没有得到锁资源的仍然停留在 EntryList中。如果 Owner 线程被 wait 方法阻塞，则转移到 WaitSet 队列中，直到某个时刻通过 notify或者 notifyAll 唤醒，会重新进去 EntryList 中。</p>
+</li>
+<li><p>处于 ContentionList、EntryList、WaitSet 中的线程都处于阻塞状态，该阻塞是由操作系统来完成的（Linux 内核下采用 pthread_mutex_lock 内核函数实现的）。</p>
+</li>
+<li><p>Synchronized 是非公平锁。 Synchronized 在线程进入 ContentionList 时，等待的线程会先尝试自旋获取锁，如果获取不到就进入 ContentionList，这明显对于已经进入队列的线程是不公平的，还有一个不公平的事情就是自旋获取锁的线程还可能直接抢占 OnDeck 线程的锁资源。参考：<a href="https://blog.csdn.net/zqz_zqz/article/details/70233767" target="_blank" rel="noopener">https://blog.csdn.net/zqz_zqz/article/details/70233767</a></p>
+</li>
+<li><p>每个对象都有个 monitor 对象，加锁就是在竞争 monitor 对象，代码块加锁是在前后分别加上 monitorenter 和 monitorexit 指令来实现的，方法加锁是通过一个标记位来判断的</p>
+</li>
+<li><p>synchronized 是一个重量级操作，需要调用操作系统相关接口，性能是低效的，有可能给线程加锁消耗的时间比有用操作消耗的时间更多。</p>
+</li>
+<li><p>Java1.6，synchronized 进行了很多的优化，有适应自旋、锁消除、锁粗化、轻量级锁及偏向锁等，效率有了本质上的提高。在之后推出的 Java1.7 与 1.8 中，均对该关键字的实现机理做了优化。引入了偏向锁和轻量级锁。都是在对象头中有标记位，不需要经过操作系统加锁。</p>
+</li>
+<li><p>锁可以从偏向锁升级到轻量级锁，再升级到重量级锁。这种升级过程叫做锁膨胀；</p>
+</li>
+<li><p>JDK 1.6 中默认是开启偏向锁和轻量级锁，可以通过-XX:-UseBiasedLocking 来禁用偏向锁。</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -209,56 +243,22 @@
       </tags>
   </entry>
   <entry>
-    <title>Synchronized同步锁</title>
-    <url>/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/</url>
-    <content><![CDATA[<h1 id="Synchronized同步锁"><a href="#Synchronized同步锁" class="headerlink" title="Synchronized同步锁"></a>Synchronized同步锁</h1><p>synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。</p>
-<h2 id="Synchronized-作用范围"><a href="#Synchronized-作用范围" class="headerlink" title="Synchronized 作用范围"></a><strong>Synchronized</strong> <strong>作用范围</strong></h2><ol>
-<li><p>作用于方法时，锁住的是对象的实例(this)；</p>
-</li>
-<li><p>当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；</p>
-</li>
-<li><p>synchronized 作用于一个对象实例时，锁住的是所有以该对象为锁的代码块。它有多个队列，当多个线程一起访问某个对象监视器的时候，对象监视器会将这些线程存储在不同的容器中。</p>
-</li>
-</ol>
-<h2 id="Synchronized-核心组件"><a href="#Synchronized-核心组件" class="headerlink" title="Synchronized 核心组件"></a><strong>Synchronized</strong> <strong>核心组件</strong></h2><ol>
-<li><p>Wait Set：哪些调用 wait 方法被阻塞的线程被放置在这里；</p>
-</li>
-<li><p>Contention List：竞争队列，所有请求锁的线程首先被放在这个竞争队列中；</p>
-</li>
-<li><p>Entry List：Contention List 中那些有资格成为候选资源的线程被移动到 Entry List 中；</p>
-</li>
-<li><p>OnDeck：任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为 OnDeck；</p>
-</li>
-<li><p>Owner：当前已经获取到所资源的线程被称为 Owner；</p>
-</li>
-<li><p>!Owner：当前释放锁的线程。</p>
-</li>
-</ol>
-<h2 id="Synchronized-实现"><a href="#Synchronized-实现" class="headerlink" title="Synchronized 实现"></a><strong>Synchronized</strong> <strong>实现</strong></h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg" alt="image-20200618154736405"></p>
-<ol>
-<li><p>JVM 每次从队列的尾部取出一个数据用于锁竞争候选者（OnDeck），但是并发情况下，ContentionList 会被大量的并发线程进行 CAS 访问，为了降低对尾部元素的竞争，JVM 会将一部分线程移动到 EntryList 中作为候选竞争线程。</p>
-</li>
-<li><p>Owner 线程会在 unlock 时，将 ContentionList 中的部分线程迁移到 EntryList 中，并指定EntryList 中的某个线程为 OnDeck 线程（一般是最先进去的那个线程）。</p>
-</li>
-<li><p>Owner 线程并不直接把锁传递给 OnDeck 线程，而是把锁竞争的权利交给 OnDeck，OnDeck 需要重新竞争锁。这样虽然牺牲了一些公平性，但是能极大的提升系统的吞吐量，在JVM 中，也把这种选择行为称之为“竞争切换”。</p>
-</li>
-<li><p>OnDeck 线程获取到锁资源后会变为 Owner 线程，而没有得到锁资源的仍然停留在 EntryList中。如果 Owner 线程被 wait 方法阻塞，则转移到 WaitSet 队列中，直到某个时刻通过 notify或者 notifyAll 唤醒，会重新进去 EntryList 中。</p>
-</li>
-<li><p>处于 ContentionList、EntryList、WaitSet 中的线程都处于阻塞状态，该阻塞是由操作系统来完成的（Linux 内核下采用 pthread_mutex_lock 内核函数实现的）。</p>
-</li>
-<li><p>Synchronized 是非公平锁。 Synchronized 在线程进入 ContentionList 时，等待的线程会先尝试自旋获取锁，如果获取不到就进入 ContentionList，这明显对于已经进入队列的线程是不公平的，还有一个不公平的事情就是自旋获取锁的线程还可能直接抢占 OnDeck 线程的锁资源。参考：<a href="https://blog.csdn.net/zqz_zqz/article/details/70233767" target="_blank" rel="noopener">https://blog.csdn.net/zqz_zqz/article/details/70233767</a></p>
-</li>
-<li><p>每个对象都有个 monitor 对象，加锁就是在竞争 monitor 对象，代码块加锁是在前后分别加上 monitorenter 和 monitorexit 指令来实现的，方法加锁是通过一个标记位来判断的</p>
-</li>
-<li><p>synchronized 是一个重量级操作，需要调用操作系统相关接口，性能是低效的，有可能给线程加锁消耗的时间比有用操作消耗的时间更多。</p>
-</li>
-<li><p>Java1.6，synchronized 进行了很多的优化，有适应自旋、锁消除、锁粗化、轻量级锁及偏向锁等，效率有了本质上的提高。在之后推出的 Java1.7 与 1.8 中，均对该关键字的实现机理做了优化。引入了偏向锁和轻量级锁。都是在对象头中有标记位，不需要经过操作系统加锁。</p>
-</li>
-<li><p>锁可以从偏向锁升级到轻量级锁，再升级到重量级锁。这种升级过程叫做锁膨胀；</p>
-</li>
-<li><p>JDK 1.6 中默认是开启偏向锁和轻量级锁，可以通过-XX:-UseBiasedLocking 来禁用偏向锁。</p>
-</li>
-</ol>
+    <title>乐观锁、悲观锁、自旋锁</title>
+    <url>/2020/06/17/%E4%B9%90%E8%A7%82%E9%94%81%E3%80%81%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81/</url>
+    <content><![CDATA[<h1 id="乐观锁、悲观锁、自旋锁"><a href="#乐观锁、悲观锁、自旋锁" class="headerlink" title="乐观锁、悲观锁、自旋锁"></a>乐观锁、悲观锁、自旋锁</h1><h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a><strong>乐观锁</strong></h2><p>乐观锁是一种乐观思想，即认为读多写少，遇到并发写的可能性低，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，采取在写时先读出当前版本号，然后加锁操作（比较跟上一次的版本号，如果一样则更新），如果失败则要重复读-比较-写的操作。</p>
+<p>java 中的乐观锁基本都是通过 CAS 操作实现的，CAS 是一种更新的原子操作，比较当前值跟传入值是否一样，一样则更新，否则失败。</p>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a><strong>悲观锁</strong></h2><p>悲观锁是就是悲观思想，即认为写多，遇到并发写的可能性高，每次去拿数据的时候都认为别人会修改，所以每次在读写数据的时候都会上锁，这样别人想读写这个数据就会 block 直到拿到锁。</p>
+<p>java中的悲观锁就是Synchronized,AQS框架下的锁则是先尝试cas乐观锁去获取锁，获取不到，才会转换为悲观锁，如 RetreenLock。</p>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a><strong>自旋锁</strong></h2><p>自旋锁原理非常简单，如果持有锁的线程能在很短时间内释放锁资源，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞挂起状态，它们只需要等一等（自旋），等持有锁的线程释放锁后即可立即获取锁，这样就避免用户线程和内核的切换的消耗。</p>
+<p>线程自旋是需要消耗 cup 的，说白了就是让 cup 在做无用功，如果一直获取不到锁，那线程也不能一直占用 cup 自旋做无用功，所以需要设定一个自旋等待的最大时间。</p>
+<p>如果持有锁的线程执行的时间超过自旋等待的最大时间扔没有释放锁，就会导致其它争用锁的线程在最大等待时间内还是获取不到锁，这时争用线程会停止自旋进入阻塞状态。</p>
+<h3 id="自旋锁的优缺点"><a href="#自旋锁的优缺点" class="headerlink" title="自旋锁的优缺点"></a><strong>自旋锁的优缺点</strong></h3><p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！</p>
+<p>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，占着 XX 不 XX，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cup 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁；自旋锁时间阈值（1.6 引入了适应性自旋锁）自旋锁的目的是为了占着 CPU 的资源不释放，等到获取到锁立即进行处理。但是如何去选择自旋的执行时间呢？如果自旋执行时间太长，会有大量的线程处于自旋状态占用 CPU 资源，进而会影响整体系统的性能。因此自旋的周期选的额外重要！</p>
+<p>JVM 对于自旋周期的选择，jdk1.5 这个限度是一定的写死的，在 1.6 引入了适应性自旋锁，适应性自旋锁意味着自旋的时间不在是固定的了，而是由前一次在同一个锁上的自旋时间以及锁的拥有者的状态来决定，基本认为一个线程上下文切换的时间是最佳的一个时间，同时 JVM 还针对当前 CPU 的负荷情况做了较多的优化，如果平均负载小于 CPUs 则一直自旋，如果有超过(CPUs/2)个线程正在自旋，则后来线程直接阻塞，如果正在自旋的线程发现 Owner 发生了变化则延迟自旋时间（自旋计数）或进入阻塞，如果 CPU 处于节电模式则停止自旋，自旋时间的最坏情况是 CPU的存储延迟（CPU A 存储了一个数据，到 CPU B 得知这个数据直接的时间差），自旋时会适当放弃线程优先级之间的差异。</p>
+<p><strong>自旋锁的开启</strong></p>
+<p>JDK1.6 中-XX:+UseSpinning 开启；</p>
+<p>-XX:PreBlockSpin=10 为自旋次数；</p>
+<p>JDK1.7 后，去掉此参数，由 jvm 控制；</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -277,6 +277,111 @@
       </categories>
       <tags>
         <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>公平锁与非公平锁</title>
+    <url>/2020/06/18/%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/</url>
+    <content><![CDATA[<h1 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h1><h2 id="公平锁（Fair）"><a href="#公平锁（Fair）" class="headerlink" title="公平锁（Fair）"></a>公平锁（Fair）</h2><p>加锁前检查是否有排队等待的线程，优先排队等待的线程，先来先得</p>
+<h3 id="非公平锁（Nonfair）"><a href="#非公平锁（Nonfair）" class="headerlink" title="非公平锁（Nonfair）"></a>非公平锁（Nonfair）</h3><p>加锁时不考虑排队等待问题，直接尝试获取锁，获取不到自动到队尾等待</p>
+<ol>
+<li><p>非公平锁性能比公平锁高 5~10 倍，因为公平锁需要在多核的情况下维护一个队列</p>
+</li>
+<li><p>Java 中的 synchronized 是非公平锁，ReentrantLock 默认的 lock()方法采用的是非公平锁。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>共享锁和独占锁</title>
+    <url>/2020/06/18/%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E7%8B%AC%E5%8D%A0%E9%94%81/</url>
+    <content><![CDATA[<h1 id="共享锁和独占锁"><a href="#共享锁和独占锁" class="headerlink" title="共享锁和独占锁"></a>共享锁和独占锁</h1><p>java 并发包提供的加锁模式分为独占锁和共享锁。</p>
+<h2 id="独占锁"><a href="#独占锁" class="headerlink" title="独占锁"></a><strong>独占锁</strong></h2><p>独占锁模式下，每次只能有一个线程能持有锁，ReentrantLock 就是以独占方式实现的互斥锁。</p>
+<p>独占锁是一种悲观保守的加锁策略，它避免了读/读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。</p>
+<h2 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a><strong>共享锁</strong></h2><p>共享锁则允许多个线程同时获取锁，并发访问 共享资源，如：ReadWriteLock。共享锁则是一种乐观锁，它放宽了加锁策略，允许多个执行读操作的线程同时访问共享资源。</p>
+<ol>
+<li><p>AQS 的内部类 Node 定义了两个常量 SHARED 和 EXCLUSIVE，他们分别标识 AQS 队列中等待线程的锁获取模式。</p>
+</li>
+<li><p>java 的并发包中提供了 ReadWriteLock，读-写锁。它允许一个资源可以被多个读操作访问，或者被一个 写操作访问，但两者不能同时进行。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分段锁</title>
+    <url>/2020/06/18/%E5%88%86%E6%AE%B5%E9%94%81/</url>
+    <content><![CDATA[<p>分段锁也并非一种实际的锁，而是一种思想 ConcurrentHashMap 是学习分段锁的最好实践</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>单例模式</title>
+    <url>/2020/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="单例模式的应用场景"><a href="#单例模式的应用场景" class="headerlink" title="单例模式的应用场景"></a><strong>单例模式的应用场景</strong></h2><p>单例模式(Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并 提供一个全局访问点。单例模式是创建型模式。单例模式在现实生活中应用也非常广泛。 例如，国家主席、公司 CEO、部门经理等。在 J2EE 标准中，ServletContext、 ServletContextConfig 等;在 Spring 框架应用中 ApplicationContext;数据库的连接 池也都是单例形式。</p>
+<h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a><strong>饿汉式单例</strong></h2><p>先来看单例模式的类结构图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfyiiaqxqmj30gk08igpd.jpg" alt="image-20200620094709265"></p>
+<p>饿汉式单例是在类加载的时候就立即初始化，并且创建单例对象。绝对线程安全，在线 程还没出现以前就是实例化了，不可能存在访问安全问题。 优点:没有加任何的锁、执行效率比较高，在用户体验上来说，比懒汉式更好。 缺点:类加载的时候就初始化，不管用与不用都占着空间，浪费了内存，有可能占着茅 坑不拉屎。</p>
+<p>Spring 中 IOC 容器 ApplicationContext 本身就是典型的饿汉式单例。接下来看一段代 码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span> </span>&#123; </span><br><span class="line">  <span class="comment">//先静态、后动态 </span></span><br><span class="line">  <span class="comment">//先属性、后方法</span></span><br><span class="line">  <span class="comment">//先上后下</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungrySingleton hungrySingleton = <span class="keyword">new</span> HungrySingleton();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> hungrySingleton;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有另外一种写法，利用静态代码块的机制:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//饿汉式静态块单例</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungryStaticSingleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungryStaticSingleton hungrySingleton;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    hungrySingleton = <span class="keyword">new</span> HungryStaticSingleton();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">HungryStaticSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungryStaticSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hungrySingleton; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两种写法都非常的简单，也非常好理解，饿汉式适用在单例对象较少的情况。下面我 们来看性能更优的写法。</p>
+<h2 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a><strong>懒汉式单例</strong></h2><p>懒汉式单例的特点是:被外部类调用的时候内部类才会加载，下面看懒汉式单例的简单 实现 LazySimpleSingleton:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//懒汉式单例 </span></span><br><span class="line"><span class="comment">//在外部需要使用的时候才进行实例化 </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySimpleSingleton</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazySimpleSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125; </span><br><span class="line">  <span class="comment">//静态块，公共内存区域</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> LazySimpleSingleton lazy = <span class="keyword">null</span>; </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySimpleSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">      lazy = <span class="keyword">new</span> LazySimpleSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazy; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后写一个线程类 ExectorThread 类:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExectorThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123; </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    LazySimpleSingleton singleton = LazySimpleSingleton.getInstance();</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">":"</span> + singleton);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端测试代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySimpleSingletonTest</span> </span>&#123; </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ExectorThread()); </span><br><span class="line">     Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ExectorThread()); </span><br><span class="line">     t1.start();</span><br><span class="line">     t2.start();</span><br><span class="line">     System.out.println(<span class="string">"End"</span>); </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一定几率出现创建两个不同结果的情况，意味着上面的单例存在线程安全隐患。</p>
+<h3 id="双重检查锁的单例模式"><a href="#双重检查锁的单例模式" class="headerlink" title="双重检查锁的单例模式"></a>双重检查锁的单例模式</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyDoubleCheckSingleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyDoubleCheckSingleton lazy = <span class="keyword">null</span>;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazyDoubleCheckSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyDoubleCheckSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (LazyDoubleCheckSingleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazy == <span class="keyword">null</span>)&#123;</span><br><span class="line">          lazy = <span class="keyword">new</span> LazyDoubleCheckSingleton(); </span><br><span class="line">          <span class="comment">//1.分配内存给这个对象</span></span><br><span class="line">          <span class="comment">//2.初始化对象</span></span><br><span class="line">          <span class="comment">//3.设置 lazy 指向刚分配的内存地址</span></span><br><span class="line">        &#125; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazy; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="静态内部类的单例模式"><a href="#静态内部类的单例模式" class="headerlink" title="静态内部类的单例模式"></a>静态内部类的单例模式</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题 //完美地屏蔽了这两个缺点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingleton</span> </span>&#123;</span><br><span class="line">  <span class="comment">//默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类</span></span><br><span class="line">  <span class="comment">//如果没使用的话，内部类是不加载的 private LazyInnerClassSingleton()&#123;&#125;</span></span><br><span class="line">  <span class="comment">//每一个关键字都不是多余的</span></span><br><span class="line">  <span class="comment">//static 是为了使单例的空间共享</span></span><br><span class="line">  <span class="comment">//保证这个方法不会被重写，重载</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//在返回结果以前，一定会先加载内部类</span></span><br><span class="line">    <span class="keyword">return</span> LazyHolder.LAZY; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//默认不加载</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton LAZY = <span class="keyword">new</span> LazyInnerClassSingleton(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题。内部类一定是要在方 法调用之前初始化，巧妙地避免了线程安全问题。由于这种方式比较简单，我们就不带 大家一步一步调试了。</p>
+<h2 id="反射破坏单例"><a href="#反射破坏单例" class="headerlink" title="反射破坏单例"></a><strong>反射破坏单例</strong></h2><p>大家有没有发现，上面介绍的单例模式的构造方法除了加上 private 以外，没有做任何处 理。如果我们使用反射来调用其构造方法，然后，再调用 getInstance()方法，应该就会 两个不同的实例。现在来看一段测试代码，以 LazyInnerClassSingleton 为例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingletonTest</span> </span>&#123; </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="comment">//很无聊的情况下，进行破坏</span></span><br><span class="line">      Class&lt;?&gt; clazz = LazyInnerClassSingleton<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">      <span class="comment">//通过反射拿到私有的构造方法</span></span><br><span class="line">      Constructor c = clazz.getDeclaredConstructor(<span class="keyword">null</span>); </span><br><span class="line">      <span class="comment">//强制访问，强吻，不愿意也要吻</span></span><br><span class="line">      c.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">      <span class="comment">//暴力初始化</span></span><br><span class="line">      Object o1 = c.newInstance();</span><br><span class="line">      <span class="comment">//调用了两次构造方法，相当于 new 了两次 //犯了原则性问题，</span></span><br><span class="line">      Object o2 = c.newInstance();</span><br><span class="line">      System.out.println(o1 == o2); </span><br><span class="line">      Object o2 = c.newInstance();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e)&#123; </span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然，是创建了两个不同的实例。现在，我们在其构造方法中做一些限制，一旦出现多 次重复创建，则直接抛出异常。来看优化后的代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//史上最牛 B 的单例模式的实现方式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInnerClassSingleton</span> </span>&#123;</span><br><span class="line">  <span class="comment">//默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类 //如果没使用的话，内部类是不加载的</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">LazyInnerClassSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(LazyHolder.LAZY != <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不允许创建多个实例"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//每一个关键字都不是多余的</span></span><br><span class="line">  <span class="comment">//static 是为了使单例的空间共享</span></span><br><span class="line">  <span class="comment">//保证这个方法不会被重写，重载</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//在返回结果以前，一定会先加载内部类</span></span><br><span class="line">    <span class="keyword">return</span> LazyHolder.LAZY; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//默认不加载</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyInnerClassSingleton LAZY = <span class="keyword">new</span> LazyInnerClassSingleton(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化破坏单例"><a href="#序列化破坏单例" class="headerlink" title="序列化破坏单例"></a><strong>序列化破坏单例</strong></h2><p>当我们将一个单例对象创建好，有时候需要将对象序列化然后写入到磁盘，下次使用时 再从磁盘中读取到对象，反序列化转化为内存对象。反序列化后的对象会重新分配内存， 即重新创建。那如果序列化的目标的对象为单例对象，就违背了单例模式的初衷，相当 于破坏了单例，来看一段代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//反序列化时导致单例破坏</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="comment">//序列化就是说把内存中的状态通过转换成字节码的形式 </span></span><br><span class="line">  <span class="comment">//从而转换一个 IO 流，写入到其他地方(可以是磁盘、网络 IO) </span></span><br><span class="line">  <span class="comment">//内存中状态给永久保存下来了</span></span><br><span class="line">  <span class="comment">//反序列化</span></span><br><span class="line">  <span class="comment">//讲已经持久化的字节码内容，转换为 IO 流</span></span><br><span class="line">  <span class="comment">//通过 IO 流的读取，进而将读取的内容转换为 Java 对象 </span></span><br><span class="line">  <span class="comment">//在转换过程中会重新创建对象 new</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> SeriableSingleton INSTANCE = <span class="keyword">new</span> SeriableSingleton(); </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SeriableSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SeriableSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写测试代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingletonTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SeriableSingleton s1 = <span class="keyword">null</span>;</span><br><span class="line">    SeriableSingleton s2 = SeriableSingleton.getInstance();</span><br><span class="line">    FileOutputStream fos = <span class="keyword">null</span>; </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      fos = <span class="keyword">new</span> FileOutputStream(<span class="string">"SeriableSingleton.obj"</span>); </span><br><span class="line">      ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(fos); oos.writeObject(s2);</span><br><span class="line">      oos.flush();</span><br><span class="line">      oos.close();</span><br><span class="line">      FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="string">"SeriableSingleton.obj"</span>); </span><br><span class="line">      ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(fis);</span><br><span class="line">      s1 = (SeriableSingleton)ois.readObject();</span><br><span class="line">      ois.close();</span><br><span class="line">      System.out.println(s1); </span><br><span class="line">      System.out.println(s2); </span><br><span class="line">      System.out.println(s1 == s2);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123; </span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从 运行结果中，可以看出，反序列化后的对象和手动创建的对象是不一致的，实例化了两 次，违背了单例的设计初衷。那么，我们如何保证序列化的情况下也能够实现单例?其</p>
+<p>实很简单，只需要增加 readResolve()方法即可。来看优化代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeriableSingleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> SeriableSingleton INSTANCE = <span class="keyword">new</span> SeriableSingleton();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SeriableSingleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SeriableSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> INSTANCE; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -332,49 +437,9 @@
       </tags>
   </entry>
   <entry>
-    <title>公平锁与非公平锁</title>
-    <url>/2020/06/18/%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/</url>
-    <content><![CDATA[<h1 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h1><h2 id="公平锁（Fair）"><a href="#公平锁（Fair）" class="headerlink" title="公平锁（Fair）"></a>公平锁（Fair）</h2><p>加锁前检查是否有排队等待的线程，优先排队等待的线程，先来先得</p>
-<h3 id="非公平锁（Nonfair）"><a href="#非公平锁（Nonfair）" class="headerlink" title="非公平锁（Nonfair）"></a>非公平锁（Nonfair）</h3><p>加锁时不考虑排队等待问题，直接尝试获取锁，获取不到自动到队尾等待</p>
-<ol>
-<li><p>非公平锁性能比公平锁高 5~10 倍，因为公平锁需要在多核的情况下维护一个队列</p>
-</li>
-<li><p>Java 中的 synchronized 是非公平锁，ReentrantLock 默认的 lock()方法采用的是非公平锁。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>共享锁和独占锁</title>
-    <url>/2020/06/18/%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E7%8B%AC%E5%8D%A0%E9%94%81/</url>
-    <content><![CDATA[<h1 id="共享锁和独占锁"><a href="#共享锁和独占锁" class="headerlink" title="共享锁和独占锁"></a>共享锁和独占锁</h1><p>java 并发包提供的加锁模式分为独占锁和共享锁。</p>
-<h2 id="独占锁"><a href="#独占锁" class="headerlink" title="独占锁"></a><strong>独占锁</strong></h2><p>独占锁模式下，每次只能有一个线程能持有锁，ReentrantLock 就是以独占方式实现的互斥锁。</p>
-<p>独占锁是一种悲观保守的加锁策略，它避免了读/读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。</p>
-<h2 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a><strong>共享锁</strong></h2><p>共享锁则允许多个线程同时获取锁，并发访问 共享资源，如：ReadWriteLock。共享锁则是一种乐观锁，它放宽了加锁策略，允许多个执行读操作的线程同时访问共享资源。</p>
-<ol>
-<li><p>AQS 的内部类 Node 定义了两个常量 SHARED 和 EXCLUSIVE，他们分别标识 AQS 队列中等待线程的锁获取模式。</p>
-</li>
-<li><p>java 的并发包中提供了 ReadWriteLock，读-写锁。它允许一个资源可以被多个读操作访问，或者被一个 写操作访问，但两者不能同时进行。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分段锁</title>
-    <url>/2020/06/18/%E5%88%86%E6%AE%B5%E9%94%81/</url>
-    <content><![CDATA[<p>分段锁也并非一种实际的锁，而是一种思想 ConcurrentHashMap 是学习分段锁的最好实践</p>
+    <title>可重入锁（递归锁）</title>
+    <url>/2020/06/18/%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%EF%BC%88%E9%80%92%E5%BD%92%E9%94%81%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="可重入锁（递归锁）"><a href="#可重入锁（递归锁）" class="headerlink" title="可重入锁（递归锁）"></a>可重入锁（递归锁）</h1><p>本文里面讲的是广义上的可重入锁，而不是单指 JAVA 下的 ReentrantLock。可重入锁，也叫做递归锁，指的是同一线程 外层函数获得锁之后 ，内层递归函数仍然有获取该锁的代码，但不受影响。在 JAVA 环境下 ReentrantLock 和 synchronized 都是 可重入锁。</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -431,18 +496,6 @@
       </categories>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>可重入锁（递归锁）</title>
-    <url>/2020/06/18/%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%EF%BC%88%E9%80%92%E5%BD%92%E9%94%81%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="可重入锁（递归锁）"><a href="#可重入锁（递归锁）" class="headerlink" title="可重入锁（递归锁）"></a>可重入锁（递归锁）</h1><p>本文里面讲的是广义上的可重入锁，而不是单指 JAVA 下的 ReentrantLock。可重入锁，也叫做递归锁，指的是同一线程 外层函数获得锁之后 ，内层递归函数仍然有获取该锁的代码，但不受影响。在 JAVA 环境下 ReentrantLock 和 synchronized 都是 可重入锁。</p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
       </tags>
   </entry>
   <entry>
@@ -739,6 +792,20 @@
       </tags>
   </entry>
   <entry>
+    <title>轻量级锁</title>
+    <url>/2020/06/18/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81/</url>
+    <content><![CDATA[<h1 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h1><p>锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。</p>
+<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a><strong>锁升级</strong></h2><p>随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。</p>
+<p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>重量级锁（MutexLock）</title>
     <url>/2020/06/18/%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%88MutexLock%EF%BC%89/</url>
     <content><![CDATA[<h1 id="重量级锁（MutexLock）"><a href="#重量级锁（MutexLock）" class="headerlink" title="重量级锁（MutexLock）"></a>重量级锁（MutexLock）</h1><p>Synchronized 是通过对象内部的一个叫做监视器锁（monitor）来实现的。但是监视器锁本质又是依赖于底层的操作系统的 Mutex Lock 来实现的。而操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized 效率低的原因。因此，这种依赖于操作系统 Mutex Lock 所实现的锁我们称之为“重量级锁”。JDK 中对 Synchronized 做的种种优化，其核心都是为了减少这种重量级锁的使用。JDK1.6 以后，为了减少获得锁和释放锁所带来的性能消耗，提高性能，引入了“轻量级锁”和“偏向锁”。</p>
@@ -759,20 +826,6 @@
 <h2 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a><strong>锁粗化</strong></h2><p>通常情况下，为了保证多线程间的有效并发，会要求每个线程持有锁的时间尽量短，即在使用完公共资源后，应该立即释放锁。但是，凡事都有一个度，如果对同一个锁不停的进行请求、同步和释放，其本身也会消耗系统宝贵的资源，反而不利于性能的优化 。</p>
 <h2 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a><strong>锁消除</strong></h2><p>锁消除是在编译器级别的事情。在即时编译器时，如果发现不可能被共享的对象，则可以消除这些对象的锁操作，多数是因为程序员编码不规范引起。</p>
 <p>参考：<a href="https://www.jianshu.com/p/39628e1180a9" target="_blank" rel="noopener">https://www.jianshu.com/p/39628e1180a9</a></p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>轻量级锁</title>
-    <url>/2020/06/18/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81/</url>
-    <content><![CDATA[<h1 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h1><p>锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。</p>
-<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a><strong>锁升级</strong></h2><p>随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。</p>
-<p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
 ]]></content>
       <categories>
         <category>juc</category>
