@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="委派模式以及策略模式委派模式委派模式的定义及应用场景委派模式不属于 GOF23 种设计模式中。委派模式(Delegate Pattern)的基本作用就是 负责任务的调用和分配任务，跟代理模式很像，可以看做是一种特殊情况下的静态代理 的全权代理，但是代理模式注重过程，而委派模式注重结果。委派模式在 Spring 中应用 非常多，大家常用的 DispatcherServlet 其实就是用到了委派模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="委派模式以及策略模式">
+<meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/20/%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%BC%8F%E4%BB%A5%E5%8F%8A%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="shoufengsfsf.github.io">
+<meta property="og:description" content="委派模式以及策略模式委派模式委派模式的定义及应用场景委派模式不属于 GOF23 种设计模式中。委派模式(Delegate Pattern)的基本作用就是 负责任务的调用和分配任务，跟代理模式很像，可以看做是一种特殊情况下的静态代理 的全权代理，但是代理模式注重过程，而委派模式注重结果。委派模式在 Spring 中应用 非常多，大家常用的 DispatcherServlet 其实就是用到了委派模式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfyt6ebq11j30ty0nsh04.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytlqr7doj30zo0sw78u.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytn8srqfj311e0g6767.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytpcouayj30r80j840y.jpg">
+<meta property="article:published_time" content="2020-06-20T07:53:46.000Z">
+<meta property="article:modified_time" content="2020-06-20T08:17:06.971Z">
+<meta property="article:author" content="shoufeng">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfyt6ebq11j30ty0nsh04.jpg">
+
+<link rel="canonical" href="https://shoufengsfsf.github.io/2020/06/20/%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%BC%8F%E4%BB%A5%E5%8F%8A%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>委派模式以及策略模式 | shoufengsfsf.github.io</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">shoufengsfsf.github.io</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://shoufengsfsf.github.io/2020/06/20/%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%BC%8F%E4%BB%A5%E5%8F%8A%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="shoufeng">
+      <meta itemprop="description" content="工作学习笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shoufengsfsf.github.io">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          委派模式以及策略模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-20 15:53:46 / 修改时间：16:17:06" itemprop="dateCreated datePublished" datetime="2020-06-20T15:53:46+08:00">2020-06-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="委派模式以及策略模式"><a href="#委派模式以及策略模式" class="headerlink" title="委派模式以及策略模式"></a>委派模式以及策略模式</h1><h2 id="委派模式"><a href="#委派模式" class="headerlink" title="委派模式"></a>委派模式</h2><h3 id="委派模式的定义及应用场景"><a href="#委派模式的定义及应用场景" class="headerlink" title="委派模式的定义及应用场景"></a>委派模式的定义及应用场景</h3><p>委派模式不属于 GOF23 种设计模式中。委派模式(Delegate Pattern)的基本作用就是 负责任务的调用和分配任务，跟代理模式很像，可以看做是一种特殊情况下的静态代理 的全权代理，但是代理模式注重过程，而委派模式注重结果。委派模式在 Spring 中应用 非常多，大家常用的 DispatcherServlet 其实就是用到了委派模式。现实生活中也常有委 派的场景发生，例如:老板(Boss)给项目经理(Leader)下达任务，项目经理会根据 实际情况给每个员工派发工作任务，待员工把工作任务完成之后，再由项目经理汇报工 作进度和结果给老板。我们用代码来模拟下这个业务场景，先来看一下类图:</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfyt6ebq11j30ty0nsh04.jpg" alt="image-20200620155618318"></p>
+<h3 id="委派模式在源码中的体现"><a href="#委派模式在源码中的体现" class="headerlink" title="委派模式在源码中的体现"></a><strong>委派模式在源码中的体现</strong></h3><p>在 Spring 源码中，只要以 Delegate 结尾的 都是实现了委派模式。例如:BeanDefinitionParserDelegate 根据不同类型委派不同的 逻辑解析 BeanDefinition。</p>
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><p>策略模式(Strategy Pattern)是指定义了算法家族、分别封装起来，让它们之间可以互 相替换，此模式让算法的变化不会影响到使用算法的用户。</p>
+<h3 id="策略模式的应用场景"><a href="#策略模式的应用场景" class="headerlink" title="策略模式的应用场景"></a><strong>策略模式的应用场景</strong></h3><ol>
+<li><p>假如系统中有很多类，而他们的区别仅仅在于他们的行为不同。</p>
+</li>
+<li><p>一个系统需要动态地在几种算法中选择一种。</p>
+</li>
+</ol>
+<h3 id="策略模式在-JDK-源码中的体现"><a href="#策略模式在-JDK-源码中的体现" class="headerlink" title="策略模式在 JDK 源码中的体现"></a><strong>策略模式在 JDK 源码中的体现</strong></h3><p>首先来看一个比较常用的比较器 Comparator 接口，我们看到的一个大家常用的 compare()方法，就是一个策略抽象实现:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt; </span>&#123; </span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Comparator 抽象下面有非常多的实现类，我们经常会把 Comparator 作为参数传入作 为排序策略，例如 Arrays 类的 parallelSort 方法等:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Arrays</span> </span>&#123; </span><br><span class="line">  ...</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">parallelSort</span><span class="params">(T[] a, <span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex, Comparator&lt;? <span class="keyword">super</span> T&gt; cmp)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; </span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有 TreeMap 的构造方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">NavigableMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> K&gt; comparator)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">this</span>.comparator = comparator;</span><br><span class="line">  &#125; </span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是 Comparator 在 JDK 源码中的应用。那我们来看策略模式在 Spring 源码中的应 用，来看 Resource 类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Resource</span> <span class="keyword">extends</span> <span class="title">InputStreamSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Determine whether this resource actually exists in physical form.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;This method performs a definitive existence check, whereas the</span></span><br><span class="line"><span class="comment">    * existence of a &#123;<span class="doctag">@code</span> Resource&#125; handle only guarantees a valid</span></span><br><span class="line"><span class="comment">    * descriptor handle.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Indicate whether the contents of this resource can be read via</span></span><br><span class="line"><span class="comment">    * &#123;<span class="doctag">@link</span> #getInputStream()&#125;.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;Will be &#123;<span class="doctag">@code</span> true&#125; for typical resource descriptors;</span></span><br><span class="line"><span class="comment">    * note that actual content reading may still fail when attempted.</span></span><br><span class="line"><span class="comment">    * However, a value of &#123;<span class="doctag">@code</span> false&#125; is a definitive indication</span></span><br><span class="line"><span class="comment">    * that the resource content cannot be read.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@see</span> #getInputStream()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Indicate whether this resource represents a handle with an open stream.</span></span><br><span class="line"><span class="comment">    * If &#123;<span class="doctag">@code</span> true&#125;, the InputStream cannot be read multiple times,</span></span><br><span class="line"><span class="comment">    * and must be read and closed to avoid resource leaks.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;Will be &#123;<span class="doctag">@code</span> false&#125; for typical resource descriptors.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Determine whether this resource represents a file in a file system.</span></span><br><span class="line"><span class="comment">    * A value of &#123;<span class="doctag">@code</span> true&#125; strongly suggests (but does not guarantee)</span></span><br><span class="line"><span class="comment">    * that a &#123;<span class="doctag">@link</span> #getFile()&#125; call will succeed.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;This is conservatively &#123;<span class="doctag">@code</span> false&#125; by default.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@since</span> 5.0</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@see</span> #getFile()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">isFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a URL handle for this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the resource cannot be resolved as URL,</span></span><br><span class="line"><span class="comment">    * i.e. if the resource is not available as descriptor</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a URI handle for this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the resource cannot be resolved as URI,</span></span><br><span class="line"><span class="comment">    * i.e. if the resource is not available as descriptor</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@since</span> 2.5</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">URI <span class="title">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a File handle for this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> java.io.FileNotFoundException if the resource cannot be resolved as</span></span><br><span class="line"><span class="comment">    * absolute file path, i.e. if the resource is not available in a file system</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException in case of general resolution/reading failures</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@see</span> #getInputStream()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a &#123;<span class="doctag">@link</span> ReadableByteChannel&#125;.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;It is expected that each call creates a &lt;i&gt;fresh&lt;/i&gt; channel.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;The default implementation returns &#123;<span class="doctag">@link</span> Channels#newChannel(InputStream)&#125;</span></span><br><span class="line"><span class="comment">    * with the result of &#123;<span class="doctag">@link</span> #getInputStream()&#125;.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> the byte channel for the underlying resource (must not be &#123;<span class="doctag">@code</span> null&#125;)</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> java.io.FileNotFoundException if the underlying resource doesn't exist</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the content channel could not be opened</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@since</span> 5.0</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@see</span> #getInputStream()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">default</span> ReadableByteChannel <span class="title">readableChannel</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Channels.newChannel(getInputStream());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Determine the content length for this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the resource cannot be resolved</span></span><br><span class="line"><span class="comment">    * (in the file system or as some other known physical resource type)</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Determine the last-modified timestamp for this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the resource cannot be resolved</span></span><br><span class="line"><span class="comment">    * (in the file system or as some other known physical resource type)</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Create a resource relative to this resource.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> relativePath the relative path (relative to this resource)</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> the resource handle for the relative resource</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> IOException if the relative resource cannot be determined</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Determine a filename for this resource, i.e. typically the last</span></span><br><span class="line"><span class="comment">    * part of the path: for example, "myfile.txt".</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;Returns &#123;<span class="doctag">@code</span> null&#125; if this type of resource does not</span></span><br><span class="line"><span class="comment">    * have a filename.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Nullable</span></span><br><span class="line">   <span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a description for this resource,</span></span><br><span class="line"><span class="comment">    * to be used for error output when working with the resource.</span></span><br><span class="line"><span class="comment">    * &lt;p&gt;Implementations are also encouraged to return this value</span></span><br><span class="line"><span class="comment">    * from their &#123;<span class="doctag">@code</span> toString&#125; method.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@see</span> Object#toString()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们虽然没有直接使用 Resource 类，但是我们经常使用它的子类，例如:</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytlqr7doj30zo0sw78u.jpg" alt="image-20200620161102750"></p>
+<p>还有一个非常典型的场景，Spring 的初始化也采用了策略模式，不同的类型的类采用不 同的初始化策略。首先有一个 InstantiationStrategy 接口，我们来看一下源码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InstantiationStrategy</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return an instance of the bean with the given name in this factory.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> bd the bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> beanName the name of the bean when it's created in this context.</span></span><br><span class="line"><span class="comment">    * The name can be &#123;<span class="doctag">@code</span> null&#125; if we're autowiring a bean which doesn't</span></span><br><span class="line"><span class="comment">    * belong to the factory.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> owner the owning BeanFactory</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> a bean instance for this bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> BeansException if the instantiation attempt failed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">Object <span class="title">instantiate</span><span class="params">(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner)</span></span></span><br><span class="line"><span class="function">         <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return an instance of the bean with the given name in this factory,</span></span><br><span class="line"><span class="comment">    * creating it via the given constructor.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> bd the bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> beanName the name of the bean when it's created in this context.</span></span><br><span class="line"><span class="comment">    * The name can be &#123;<span class="doctag">@code</span> null&#125; if we're autowiring a bean which doesn't</span></span><br><span class="line"><span class="comment">    * belong to the factory.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> owner the owning BeanFactory</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> ctor the constructor to use</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> args the constructor arguments to apply</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> a bean instance for this bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> BeansException if the instantiation attempt failed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">Object <span class="title">instantiate</span><span class="params">(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner,</span></span></span><br><span class="line"><span class="function"><span class="params">         Constructor&lt;?&gt; ctor, @Nullable Object... args)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return an instance of the bean with the given name in this factory,</span></span><br><span class="line"><span class="comment">    * creating it via the given factory method.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> bd the bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> beanName the name of the bean when it's created in this context.</span></span><br><span class="line"><span class="comment">    * The name can be &#123;<span class="doctag">@code</span> null&#125; if we're autowiring a bean which doesn't</span></span><br><span class="line"><span class="comment">    * belong to the factory.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> owner the owning BeanFactory</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> factoryBean the factory bean instance to call the factory method on,</span></span><br><span class="line"><span class="comment">    * or &#123;<span class="doctag">@code</span> null&#125; in case of a static factory method</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> factoryMethod the factory method to use</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> args the factory method arguments to apply</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> a bean instance for this bean definition</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> BeansException if the instantiation attempt failed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function">Object <span class="title">instantiate</span><span class="params">(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner,</span></span></span><br><span class="line"><span class="function"><span class="params">         @Nullable Object factoryBean, Method factoryMethod, @Nullable Object... args)</span></span></span><br><span class="line"><span class="function">         <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytn8srqfj311e0g6767.jpg" alt="image-20200620161229040"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfytpcouayj30r80j840y.jpg" alt="image-20200620161431760"></p>
+<p>打开类图我们还发现 CglibSubclassingInstantiationStrategy 策略类还继承了 SimpleInstantiationStrategy 类，说明在实际应用中多种策略之间还可以继承使用。小伙们可以作为一个参考，在实际业务场景中，可以根据需要来设计。</p>
+<h3 id="策略模式的优缺点"><a href="#策略模式的优缺点" class="headerlink" title="策略模式的优缺点"></a><strong>策略模式的优缺点</strong></h3><p>优点:</p>
+<ol>
+<li><p>策略模式符合开闭原则。</p>
+</li>
+<li><p>避免使用多重条件转移语句，如 if…else…语句、switch 语句 3、使用策略模式可以提高算法的保密性和安全性。</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>客户端必须知道所有的策略，并且自行决定使用哪一个策略类。</p>
+</li>
+<li><p>代码中会产生非常多策略类，增加维护难度。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/20/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" rel="prev" title="代理模式">
+      <i class="fa fa-chevron-left"></i> 代理模式
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#委派模式以及策略模式"><span class="nav-number">1.</span> <span class="nav-text">委派模式以及策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#委派模式"><span class="nav-number">1.1.</span> <span class="nav-text">委派模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#委派模式的定义及应用场景"><span class="nav-number">1.1.1.</span> <span class="nav-text">委派模式的定义及应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#委派模式在源码中的体现"><span class="nav-number">1.1.2.</span> <span class="nav-text">委派模式在源码中的体现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式"><span class="nav-number">1.2.</span> <span class="nav-text">策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式的应用场景"><span class="nav-number">1.2.1.</span> <span class="nav-text">策略模式的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式在-JDK-源码中的体现"><span class="nav-number">1.2.2.</span> <span class="nav-text">策略模式在 JDK 源码中的体现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式的优缺点"><span class="nav-number">1.2.3.</span> <span class="nav-text">策略模式的优缺点</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">shoufeng</p>
+  <div class="site-description" itemprop="description">工作学习笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shoufeng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
