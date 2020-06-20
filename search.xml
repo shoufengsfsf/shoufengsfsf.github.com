@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AtomicInteger</title>
-    <url>/2020/06/18/AtomicInteger/</url>
-    <content><![CDATA[<h1 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><strong>AtomicInteger</strong></h1><p>首先说明，此处 AtomicInteger ，一个提供原子操作的 Integer 的类，常见的还有AtomicBoolean、AtomicInteger、AtomicLong、AtomicReference 等，他们的实现原理相同，区别在与运算对象类型的不同。令人兴奋地，还可以通过 AtomicReference<V>将一个对象的所有操作转化成原子操作。</p>
-<p>我们知道，在多线程程序中，诸如++i 或 i++等运算不具有原子性，是不安全的线程操作之一。通常我们会使用 synchronized 将该操作变成一个原子操作，但 JVM 为此类操作特意提供了一些</p>
-<p>同步类，使得使用更方便，且使程序运行效率变得更高。通过相关资料显示，通常AtomicInteger的性能是 ReentantLock 的好几倍。</p>
+    <title>ReadWriteLock读写锁</title>
+    <url>/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/</url>
+    <content><![CDATA[<h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
+<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
+<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
+<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -15,12 +16,11 @@
       </tags>
   </entry>
   <entry>
-    <title>ReadWriteLock读写锁</title>
-    <url>/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/</url>
-    <content><![CDATA[<h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
-<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
-<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
-<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
+    <title>AtomicInteger</title>
+    <url>/2020/06/18/AtomicInteger/</url>
+    <content><![CDATA[<h1 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><strong>AtomicInteger</strong></h1><p>首先说明，此处 AtomicInteger ，一个提供原子操作的 Integer 的类，常见的还有AtomicBoolean、AtomicInteger、AtomicLong、AtomicReference 等，他们的实现原理相同，区别在与运算对象类型的不同。令人兴奋地，还可以通过 AtomicReference<V>将一个对象的所有操作转化成原子操作。</p>
+<p>我们知道，在多线程程序中，诸如++i 或 i++等运算不具有原子性，是不安全的线程操作之一。通常我们会使用 synchronized 将该操作变成一个原子操作，但 JVM 为此类操作特意提供了一些</p>
+<p>同步类，使得使用更方便，且使程序运行效率变得更高。通过相关资料显示，通常AtomicInteger的性能是 ReentantLock 的好几倍。</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -187,6 +187,37 @@
       </tags>
   </entry>
   <entry>
+    <title>偏向锁</title>
+    <url>/2020/06/18/%E5%81%8F%E5%90%91%E9%94%81/</url>
+    <content><![CDATA[<h1 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h1><p>Hotspot 的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。引入偏向锁是为了在无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径，因为轻量级锁的获取及释放依赖多次 CAS 原子指令，而偏向锁只需要在置换ThreadID 的时候依赖一次 CAS 原子指令（由于一旦出现多线程竞争的情况就必须撤销偏向锁，所以偏向锁的撤销操作的性能损耗必须小于节省下来的 CAS 原子指令的性能消耗）。上面说过，轻量级锁是为了在线程交替执行同步块时提高性能，而偏向锁则是在只有一个线程执行同步块时进一步提高性能。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>公平锁与非公平锁</title>
+    <url>/2020/06/18/%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/</url>
+    <content><![CDATA[<h1 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h1><h2 id="公平锁（Fair）"><a href="#公平锁（Fair）" class="headerlink" title="公平锁（Fair）"></a>公平锁（Fair）</h2><p>加锁前检查是否有排队等待的线程，优先排队等待的线程，先来先得</p>
+<h3 id="非公平锁（Nonfair）"><a href="#非公平锁（Nonfair）" class="headerlink" title="非公平锁（Nonfair）"></a>非公平锁（Nonfair）</h3><p>加锁时不考虑排队等待问题，直接尝试获取锁，获取不到自动到队尾等待</p>
+<ol>
+<li><p>非公平锁性能比公平锁高 5~10 倍，因为公平锁需要在多核的情况下维护一个队列</p>
+</li>
+<li><p>Java 中的 synchronized 是非公平锁，ReentrantLock 默认的 lock()方法采用的是非公平锁。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring-ioc运行时序解析</title>
     <url>/2020/06/18/spring-ioc%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E8%A7%A3%E6%9E%90/</url>
     <content><![CDATA[<h1 id="spring-ioc运行时序解析"><a href="#spring-ioc运行时序解析" class="headerlink" title="spring-ioc运行时序解析"></a>spring-ioc运行时序解析</h1><h2 id="Spring-核心之-IOC-容器初体验"><a href="#Spring-核心之-IOC-容器初体验" class="headerlink" title="Spring 核心之 IOC 容器初体验"></a>Spring 核心之 IOC 容器初体验</h2><h3 id="再谈-IOC-与-DI"><a href="#再谈-IOC-与-DI" class="headerlink" title="再谈 IOC 与 DI"></a><strong>再谈 IOC 与 DI</strong></h3><p><strong>IOC</strong>(Inversion of Control)控制反转：所谓控制反转，就是把原先我们代码里面需要实现的对象创 建、依赖的代码，反转给容器来帮忙实现。那么必然的我们需要创建一个容器，同时需要一种描述来让 容器知道需要创建的对象与对象的关系。这个描述最具体表现就是我们所看到的配置文件。 </p>
@@ -268,37 +299,6 @@
       </tags>
   </entry>
   <entry>
-    <title>偏向锁</title>
-    <url>/2020/06/18/%E5%81%8F%E5%90%91%E9%94%81/</url>
-    <content><![CDATA[<h1 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h1><p>Hotspot 的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。引入偏向锁是为了在无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径，因为轻量级锁的获取及释放依赖多次 CAS 原子指令，而偏向锁只需要在置换ThreadID 的时候依赖一次 CAS 原子指令（由于一旦出现多线程竞争的情况就必须撤销偏向锁，所以偏向锁的撤销操作的性能损耗必须小于节省下来的 CAS 原子指令的性能消耗）。上面说过，轻量级锁是为了在线程交替执行同步块时提高性能，而偏向锁则是在只有一个线程执行同步块时进一步提高性能。</p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>公平锁与非公平锁</title>
-    <url>/2020/06/18/%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/</url>
-    <content><![CDATA[<h1 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h1><h2 id="公平锁（Fair）"><a href="#公平锁（Fair）" class="headerlink" title="公平锁（Fair）"></a>公平锁（Fair）</h2><p>加锁前检查是否有排队等待的线程，优先排队等待的线程，先来先得</p>
-<h3 id="非公平锁（Nonfair）"><a href="#非公平锁（Nonfair）" class="headerlink" title="非公平锁（Nonfair）"></a>非公平锁（Nonfair）</h3><p>加锁时不考虑排队等待问题，直接尝试获取锁，获取不到自动到队尾等待</p>
-<ol>
-<li><p>非公平锁性能比公平锁高 5~10 倍，因为公平锁需要在多核的情况下维护一个队列</p>
-</li>
-<li><p>Java 中的 synchronized 是非公平锁，ReentrantLock 默认的 lock()方法采用的是非公平锁。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分段锁</title>
     <url>/2020/06/18/%E5%88%86%E6%AE%B5%E9%94%81/</url>
     <content><![CDATA[<p>分段锁也并非一种实际的锁，而是一种思想 ConcurrentHashMap 是学习分段锁的最好实践</p>
@@ -323,18 +323,6 @@
 <li><p>java 的并发包中提供了 ReadWriteLock，读-写锁。它允许一个资源可以被多个读操作访问，或者被一个 写操作访问，但两者不能同时进行。</p>
 </li>
 </ol>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>可重入锁（递归锁）</title>
-    <url>/2020/06/18/%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%EF%BC%88%E9%80%92%E5%BD%92%E9%94%81%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="可重入锁（递归锁）"><a href="#可重入锁（递归锁）" class="headerlink" title="可重入锁（递归锁）"></a>可重入锁（递归锁）</h1><p>本文里面讲的是广义上的可重入锁，而不是单指 JAVA 下的 ReentrantLock。可重入锁，也叫做递归锁，指的是同一线程 外层函数获得锁之后 ，内层递归函数仍然有获取该锁的代码，但不受影响。在 JAVA 环境下 ReentrantLock 和 synchronized 都是 可重入锁。</p>
 ]]></content>
       <categories>
         <category>juc</category>
@@ -394,6 +382,18 @@
       </tags>
   </entry>
   <entry>
+    <title>可重入锁（递归锁）</title>
+    <url>/2020/06/18/%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81%EF%BC%88%E9%80%92%E5%BD%92%E9%94%81%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="可重入锁（递归锁）"><a href="#可重入锁（递归锁）" class="headerlink" title="可重入锁（递归锁）"></a>可重入锁（递归锁）</h1><p>本文里面讲的是广义上的可重入锁，而不是单指 JAVA 下的 ReentrantLock。可重入锁，也叫做递归锁，指的是同一线程 外层函数获得锁之后 ，内层递归函数仍然有获取该锁的代码，但不受影响。在 JAVA 环境下 ReentrantLock 和 synchronized 都是 可重入锁。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>模仿spring-mvc</title>
     <url>/2020/06/17/%E6%A8%A1%E4%BB%BFspring-mvc/</url>
     <content><![CDATA[<h1 id="模仿spring-mvc"><a href="#模仿spring-mvc" class="headerlink" title="模仿spring-mvc"></a>模仿spring-mvc</h1><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfvnfa3619j31gm0tie81.jpg" alt="image-20200617222032762"></p>
@@ -423,6 +423,20 @@
       </categories>
       <tags>
         <tag>模仿spring-mvc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>轻量级锁</title>
+    <url>/2020/06/18/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81/</url>
+    <content><![CDATA[<h1 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h1><p>锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。</p>
+<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a><strong>锁升级</strong></h2><p>随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。</p>
+<p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
+]]></content>
+      <categories>
+        <category>juc</category>
+      </categories>
+      <tags>
+        <tag>java锁</tag>
       </tags>
   </entry>
   <entry>
@@ -684,20 +698,6 @@
       </categories>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>轻量级锁</title>
-    <url>/2020/06/18/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81/</url>
-    <content><![CDATA[<h1 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h1><p>锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。</p>
-<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a><strong>锁升级</strong></h2><p>随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。</p>
-<p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
-]]></content>
-      <categories>
-        <category>juc</category>
-      </categories>
-      <tags>
-        <tag>java锁</tag>
       </tags>
   </entry>
   <entry>
