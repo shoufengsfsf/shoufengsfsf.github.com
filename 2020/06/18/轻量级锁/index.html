@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="轻量级锁锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。 锁升级随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。 “轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。">
+  <meta name="description" content="请输入密码查看.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="轻量级锁">
 <meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/18/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="轻量级锁锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。 锁升级随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。 “轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。">
+<meta property="og:description" content="请输入密码查看.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-18T08:12:12.000Z">
 <meta property="article:modified_time" content="2020-06-18T08:17:10.884Z">
@@ -236,10 +236,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h1><p>锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁。</p>
-<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a><strong>锁升级</strong></h2><p>随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级）。</p>
-<p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，它的本意是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
-
+        <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="67752d803c9c2da8bf3347c9a909ae58fc1bb21533d8de82c5c1b3652b0c1cc1">68f8c51671e4b22145a8a16f87cdcd5d117c6f7ebc399378448dab316809c99a9e76302271416f5a3577634870d27a0b76b5ad0eb2c70cd115b79bf4fede6eb0518c25801d5fa4797458069ec10a8ab8995ea3d1766e31e38f1fd81e2d05742d65d163f349ab2f69119ba0e77324693ea4757fc52c2a153ec4c471e69c488cca136e013fdd6dca64fc6e0096fad05b3105f60775e9174e0225065a597703c2ad032641377a05695af6e6b8623fb55f083c536676f7e0a74fefa7aa3503e71a4287c78e3b26178c6874277c7be1aed8b444cbfae1146491df71f81cac17d321d5de7ccdbbd275fe48545fff84bd0070f35c52703f99af59028a009f1f1db5a1fe810b9d4bc5573dadfe7c1a7bf92f5e631574b9c89f31771b160502e51886e7d633e13dd87ea5319f5d9b390d8fe4410a1ed1d2b41953a4bd8e6740c6f9711132b733618ec84acce943efbcd596a766a301ec6d942bdd6d01fa288206f5c3f2ceff364a89db754c059f72b02898e8e80eb7ca1fbb98fd3f2ed6439901c9e4f005831684f93168ccd6032dfce0e7f80a608aad10f9e1ac18ecbac22873e9002ce1ef9b28702f7efbc787cc4aeb332bfcf74d1d05740e2a9099f04421755638d7cd289147bcc2ef5226735480a17b95e1c993f8be116121190f0e1b3368a131c39b72611d7fcc134815fab413fa69145ce5ffb5e3c899198e479014d7fa20df8d81e8011680d1d4f676a9e3bdc199b2e3bf7d8a54c593c404342fdba7f79de4ab9bdbf742555d96cc00fa35a2ae64c24fc7e5474cf5d5fc1d4ae180725f8ffa4bdf085391864055d34ff87a485149936bab5975b5b07f538bd137584f10dce52bb64ccfc84306a3ddaaec7dbcb5d22cc92cc0f5a7d5d646a6ee8ec8a1dc16962d4df18008197dee55d3ff332bb1db89af82a5b7f36f3440e8e6759409bee4dcd386f07c257bab37d130a97e7488facc91ce391fcda9ff5da3db91df28b9f5c75d6437bdb9f9a5d766b4d6abcdfff80386abc11917421f05144c61c2049bf0117b78b086d9b243046a435d707c7043e843c98376fab51fc4567d5f86ba7dfd186b079a7d048d5e1f4bf2b9abd121303f8d4287e43aa0b10dc30569a0f1bc7d11013c5b36a7d7a2018f94b0da7b38631641382295c55ee3d643acd5572165a1edd74b64638e50d078bf33277339203d0f8156fd33ae17ee79eb567dfa42978785ba2eae99a211666e08078326b5770ee8248541c277c7d604ac35fc4bc3117029a85c4f436de35b53825af23505d4a96ae3032848ed8282c256beac2520be50159ea4ab2a1f3f8ef16e1e914226df3aa50d206c2a575439b5a21c62db542345e161245251866f68d0b0984d024363cc0dc5115b34880305111b481e40652864ce934e8847eb18c4aa8f151102ec1cd90165f4f06759cee29dea70510e45cbb44f4744407fdf6730cb7ab0405997f8c89a520b1f6c3eb766c8f8e0081f956e309a0eb4</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -322,7 +319,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#轻量级锁"><span class="nav-number">1.</span> <span class="nav-text">轻量级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁升级"><span class="nav-number">1.1.</span> <span class="nav-text">锁升级</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
