@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="请输入密码查看.">
+  <meta name="description" content="ReadWriteLock读写锁为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。 读锁如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁 写锁如果你的代码修改数据，只能有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ReadWriteLock读写锁">
 <meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/18/ReadWriteLock%E8%AF%BB%E5%86%99%E9%94%81/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="请输入密码查看.">
+<meta property="og:description" content="ReadWriteLock读写锁为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。 读锁如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁 写锁如果你的代码修改数据，只能有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-18T08:10:20.000Z">
 <meta property="article:modified_time" content="2020-06-18T08:11:20.626Z">
@@ -236,7 +236,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="85da97dab54296d12dcd3d43f9ab1b77d05df0f6d9718f28c086ba6bace5450a">6cb0816ff805aa93f579c625810fa82f1b4a3ba7c122cd1ebfe159378cff59333e23777a86f68075f758671ee7e95527032f37a4c734f11e2ddde3283cd5bb1eb0473b6b2993d8c61b150bb06520ee2e9c6af918bc1c590859b0b551205d3f7d8758c46daa30b0585b3ce13ec42834b7ad7b32586c862fb45df549a0d839b426dbee531a0eb303faf5dad55db2a7da765213dfd1f985c5fd0877d22a2a6699f11947582f919702f30dd08598d0802f3d27fb6ec7ac236023037e45a117e588dce6eba57ed430d53e6daaaa2f5972d9bbf8f5ea29b021b1bce5f88a198077dfb08ee7e9504f8fa1e34e9cf21de242d8bd7e373f8548db252a43164a812095a87dc589c918c08c3c03f73744ff8a4f493c2f90fe227d5015b9ed06fdc5506f4501ab02bb371d50071e5447b65efe0cc1b6da0a3c8bb182dbb108dde110ceacfba576931f294ef3027829ceaaee925dffcc59b1f414caa844cdbcea0bcbdd782f23049c0b3bf4576a97f2afe2ba214d46fd8f35c4fdcfbc782c8d571dd19592ff49d0f8c46c84d0fe2e04ab51d0c64019c4cdf5a59c750539e9178c70dc33caec8e844b405ee972efcd6e2025495c31a64106e099b94988915d9fd6fa01995125d2220f7c1e22ab26ea6d1f315561667f4eb180e223e78865872ff4b86e91a39fe880c581f74316dee69e72c35df061fbb8a42d19cfd4ae6d1457b0fa84e44d651a1cfbb36d79be23d5f7809112c5307749eb65c374cc21876af7ded680e995271bc3b611cd88d9d528fb6043c71de8f76eecd71e79796211adf70a30dfb169cb5a8a9c6ef7e19e5c6fe3d7f07e813b5ae8b7cb017c4a57f47ba788550ed7c0aad923886a4f5005b9d9d527e94ce7d53ad6f095b89797001d35776ae5411033312a9f20039c6ed02efbb517f9c8bb3003641f53e7e553c5f55037f3380f5754cf17c43355d1cec8e97889c26b403704ca494882de2feb3677222f82ce702b7fabdc8e0566fc2d93722d26cc8dc8f72eb1bec650405df4f38d4a7f02df66ac38cb9dc90b5fbadb239410bc012a5dfef58c68b46d3e7975481500c9038e43636110d80e6573c20fb63c9821bcea657c6371529f1e68af5b93643f79741cd8cdfcc1ed7ffdd2be1840f98de69a9f6137d9fc2fe71c90d7309efbbef5a471b9af5daa5cc0e5ed51cc3b56ecff4fd00b4867f3803bb99bb94715ef2dc314ab80a67de95001b260717fc2a936212d950b9df91854c330b7a431fd5bc19cbe3a24fd6ef556a341f48a2601ba7a68def8ed86644c376edcacd3b996470bf3638d07917a68ecf6419849d377188f3badfd8c6d63b9ac85fab28367e83637a3260bf592ff9a833e4eed2f128b1155842026fafcd4e180f77716a8c2932b0ce9c025fbbe82c2a907b0a9df042cf4f04d8300899d96488012fa232dc40acadb854baf55c5bdbdd89dd3bf8aa335eefcf91aa29af1d0d585e1a202501b7bb276135f6754a7ab5ab095c4f83b10148087176b317507653debd18987bf8e42f4dacf8f5a6bb9b7f8d2abe55161488741605e572861a2cc3dc18453f75767e8a2b9f77258e3b1055278273a1baffba0914e985f61fc0c680b92ca4b11b6b34c86491c99045e284f584f</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        <h1 id="ReadWriteLock读写锁"><a href="#ReadWriteLock读写锁" class="headerlink" title="ReadWriteLock读写锁"></a>ReadWriteLock读写锁</h1><p>为了提高性能，Java 提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，如果没有写锁的情况下，读是无阻塞的,在一定程度上提高了程序的执行效率。读写锁分为读锁和写锁，多个读锁不互斥，读锁与写锁互斥，这是由 jvm 自己控制的，你只要上好相应的锁即可。</p>
+<h2 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a><strong>读锁</strong></h2><p>如果你的代码只读数据，可以很多人同时读，但不能同时写，那就上读锁</p>
+<h2 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a><strong>写锁</strong></h2><p>如果你的代码修改数据，只能有一个人在写，且不能同时读取，那就上写锁。总之，读的时候上读锁，写的时候上写锁！</p>
+<p>Java 中 读 写 锁 有 个 接 口 java.util.concurrent.locks.ReadWriteLock ， 也 有 具 体 的 实 现ReentrantReadWriteLock。</p>
+
     </div>
 
     
@@ -319,6 +323,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ReadWriteLock读写锁"><span class="nav-number">1.</span> <span class="nav-text">ReadWriteLock读写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读锁"><span class="nav-number">1.1.</span> <span class="nav-text">读锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写锁"><span class="nav-number">1.2.</span> <span class="nav-text">写锁</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

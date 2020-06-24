@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="请输入密码查看.">
+  <meta name="description" content="共享锁和独占锁java 并发包提供的加锁模式分为独占锁和共享锁。 独占锁独占锁模式下，每次只能有一个线程能持有锁，ReentrantLock 就是以独占方式实现的互斥锁。 独占锁是一种悲观保守的加锁策略，它避免了读&#x2F;读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。 共享锁共享锁则允许多个线程同时获取锁，并发访问 共享资源，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="共享锁和独占锁">
 <meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/18/%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E7%8B%AC%E5%8D%A0%E9%94%81/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="请输入密码查看.">
+<meta property="og:description" content="共享锁和独占锁java 并发包提供的加锁模式分为独占锁和共享锁。 独占锁独占锁模式下，每次只能有一个线程能持有锁，ReentrantLock 就是以独占方式实现的互斥锁。 独占锁是一种悲观保守的加锁策略，它避免了读&#x2F;读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。 共享锁共享锁则允许多个线程同时获取锁，并发访问 共享资源，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-18T08:11:46.000Z">
 <meta property="article:modified_time" content="2020-06-18T08:13:56.629Z">
@@ -236,7 +236,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="384f3d51ab0e5811a1fe3df177a25002644efb0ff2f08d1d88307565a7513280">a240973d37ca07f5b9b3541fdb6f3fbd20c1be7286303f7d89e2e0030490405f251627b3c4be46a31dbce2bdf1bb94cdb8f3c521f9a56e4400029cc5e178da560b354ce32c5b1a8d4c09295380e9391e169aa325ef70a6bea8de173b8f0abf97dd11f6aa11c21561e5d3e72ce7a919ff3a8145daa76fade68995d8f4a16fb7696c1398cf3d300fe6fbe34bee7562f44428679e528b2269591afeb6d675e37a9a3db87f3a806a90f94df710a1cd16cbe20ed57f52e42e407b65df4b8526dd01104732a478dfdec8a4790c5e5faca5b86d4a940a019fafbb9202b48a86d4c619695fe724596069533bea30a0397784ec2b2bb69f027d7988788104608ab74b692ecb17531406afc5c2273a388caba8ed6cf3a975e9a74b8d5048056aba677a131bebbcfe8bbe719acfdb3c8f1d1609193bcddaf4f35e188f8ee3cd6b6372dea1eb917115dd8c8851b5c9b91b6c9cddb6d7d934514e5ad20ac042cd4f9f36c07cad203a9c4d085b60b225004b71d9ff52e8d4d4268f831104e62441179e8e1c7f62d253751601b8a57d673acb769be1d24c3e5e5d81aca4a0fcadbdc7a40b96f97c7f1db555886b0579b3222da156242024606525eb1eb2f52c00e105bd59414dda4e08f31055ad1da762eff7d984edf222e9e9a0a9fb3708a6f61de877c5cd375936a09b9fce4695015066629727121de4257217b22d6ca6045cc8c148bf5f9eba4a8803161730cf65b22dd0b0a463684e34dc64b15ecdee04e55414733cb0029114626cf898bb02501f2361b66f731940d0b53afe15d3a598039135de0163b0812abc3ffe1699f2599f1fbdb4789db4993d6548a0be251082d0ffad0bf36fd25f014114ae747d6caf4c0b60cc171131fdb489007d9ed5395d9dbd1ca1c2c1bfab4e71e2795dd7b22c5145d4b1bc92783ef7e96a8a5e14cd3c2cc40ce20e086dfe0f4525063f9d27262129bcfff05807c61732597a826d060819faac7656a95ef35e469eb138072daa963a38bc0913710b4359c9419b31a79cda5226a213a3469d3a7c6b7bd0fb2b38f3257998d6f38e0c247e5d4aff568a0acbfcd0c8e87dbcc9eeb35261b4908e1d4b2d8ba369a047fe76eaff65c5765d93e1ea6d56cfc52c810d9df1573bef54829ea7ab6ee8abdb980d9dd1c513ab8427411e0f897bcd5c6b18146bd09b3a4244506a8e70e968b23cdf7044acece3ceab1bfca6ec0889f0b783662f3277c60d4fafc51db4fa7a77c0ec992b655a6009481e55b6916d0e02022efcd5bb231995ef6213b01e73107f16100e24b8f57b0a684a92c7b08ac6a3b0392e853cba82acfb0eb783dcc0f52fa2880dbdf9b22c3673bdad6ad2468071b2b6e7a49e695fd36be5c78955f4b2189cb4026e04b86b7d9e30662b03ca56139d389834d3f73bff17f5afe98c44e64d8731d6f579ed2187eb57bc7f7f600b7f61cd2278a5d6fae84f78ad1cf818bf717cf4e1caec8757f280f14bd824b2b43406a45adf05221f8e17d8f3d785887ab2eb31d9adc516472a677154a2faa3172e4ddc391913160358aa3a65fd92107b1d28f234524f93b4a3462de0bb967619e3a623fb706aa99013c2b2878c7983635c14460690449b628556d3780ec5e23c6a02664da4fc350558e3af4468eda2b628ff82732709219b00b4c7af0cbd4583c768d3493ef2c7f25e99ab052684b20280092f9146a3dfd700b842d45df06cccf0213a8bae4d2aab24b1f20dcbd6d0939c308bc1145a3e962746317dd50a2ecb74500c83165228681f83ccdad3f022ac1f9e6d379602562cc0b9a798b50cf66418de2859e9213b04aec6d18476ab5f9d2bfe0aafcbf469ed8f5be797389adf71d7964caf8946a862156de70070943c9cfcbf7d1abbbf3cdde92b7fa8d9f477405d1bb8f9773ef950b40cfc90414e3c09c7e75cbb37b432aadfc768bc853f1a944215d9f31e4da290b3fc48c5a37e0db8e2dcfe3caf5d0478e1da108efd831ec2ae92b35bc1bbac2b85c17ded30474aae9db1</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        <h1 id="共享锁和独占锁"><a href="#共享锁和独占锁" class="headerlink" title="共享锁和独占锁"></a>共享锁和独占锁</h1><p>java 并发包提供的加锁模式分为独占锁和共享锁。</p>
+<h2 id="独占锁"><a href="#独占锁" class="headerlink" title="独占锁"></a><strong>独占锁</strong></h2><p>独占锁模式下，每次只能有一个线程能持有锁，ReentrantLock 就是以独占方式实现的互斥锁。</p>
+<p>独占锁是一种悲观保守的加锁策略，它避免了读/读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。</p>
+<h2 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a><strong>共享锁</strong></h2><p>共享锁则允许多个线程同时获取锁，并发访问 共享资源，如：ReadWriteLock。共享锁则是一种乐观锁，它放宽了加锁策略，允许多个执行读操作的线程同时访问共享资源。</p>
+<ol>
+<li><p>AQS 的内部类 Node 定义了两个常量 SHARED 和 EXCLUSIVE，他们分别标识 AQS 队列中等待线程的锁获取模式。</p>
+</li>
+<li><p>java 的并发包中提供了 ReadWriteLock，读-写锁。它允许一个资源可以被多个读操作访问，或者被一个 写操作访问，但两者不能同时进行。</p>
+</li>
+</ol>
+
     </div>
 
     
@@ -319,6 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#共享锁和独占锁"><span class="nav-number">1.</span> <span class="nav-text">共享锁和独占锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#独占锁"><span class="nav-number">1.1.</span> <span class="nav-text">独占锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享锁"><span class="nav-number">1.2.</span> <span class="nav-text">共享锁</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="请输入密码查看.">
+  <meta name="description" content="重量级锁（MutexLock）Synchronized 是通过对象内部的一个叫做监视器锁（monitor）来实现的。但是监视器锁本质又是依赖于底层的操作系统的 Mutex Lock 来实现的。而操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized 效率低的原因。因此，这种依赖于操作系统 Mutex Lock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重量级锁（MutexLock）">
 <meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/18/%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%88MutexLock%EF%BC%89/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="请输入密码查看.">
+<meta property="og:description" content="重量级锁（MutexLock）Synchronized 是通过对象内部的一个叫做监视器锁（monitor）来实现的。但是监视器锁本质又是依赖于底层的操作系统的 Mutex Lock 来实现的。而操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized 效率低的原因。因此，这种依赖于操作系统 Mutex Lock">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-18T08:15:36.000Z">
 <meta property="article:modified_time" content="2020-06-18T08:16:26.531Z">
@@ -236,7 +236,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="f758c7092a35f6f3294203fdff6c9be1e7982b401c898f451576fc016c42cdd9">cc9e97849df6289d3188a484bd3d1d1be27df5d3e34f3c33a1a8fdaf84fa8a20b8f8688f74ade483a0b2581e4767e1096b3e660e87e990338990364c6ce9e607a1a57f972893165abd3e448409c85b8361f41095faf43e67cb7a78ba975063307053dfc99164dfe5a28f1fc8ed043ff97d3938efaf1dd6870c1e1070372396ba38e5ffd8c4a9eb95152bd6d7062d28b317b842e7cfa76dc8e667b6cf67f931014a79811daf335f77ac63daf60cf751889462ad72433bfce12dd842fd4eed5c85899c58df545681a3485a24d3389e66bbf875da7fb59e6c05c9308e3be60eaf94e10956b585cf5d03d697efcdbf5d943a8ca29f971988d47886957824a79a0290b739f13fc672082b203a739ca37017fa5e427b3ab485bfa129221508ce8852cec490791d992ee975e59d1de75811618bb5f3e952ace9e3133fb70f7fcc9490661afeea7a7954a393d99a84bd8f87267bfbdfd9b8dfc8548be5c60e79086458bcba05a0c76a8765430dc9e87ab46d09f3a12f43aa5411b9d1d6233c4b96ad750f886ec8c37f3d7ea3bc59d85631f40994b281738761860c8e7b25c6729b3fc398bb3ec83b69f0572f0852f0e2b2311466788da3ec8ad42c23177ef19c2023f5cc2d7118b4841dabc5347d8a097342ab626d9138e84ca3193073eb81f7c6d01cd5146c5b63ed9881a038ed7646a1ab46ac20d3b8b69bd046aaaeab8028a3a8d7d37060fbd28805e07aa224b5ed4721e1b0d0d06612fe39bfa86bfac25a1847f3701cc387cdb55a26361c24f190a9b01a834d7afad5449c80e7479b1c5b80aa8796724c8a97afe909ec95283801e4c3ad2402ab49320c0ff0c75360c20eb435c174b59869a0f683ac49510541ad16cba80342573ae046a9b8fc256e343d9f9cebb0833c91c50def14289b43228c5f3fca6d37ca1d3a1e64f75382b34dde286292131e371162dd76fa9a859999018de2b616f342d9fa3af9361a4486444cddfdd176ba9d051176d0c46933e80474442aa0ba72065a3a15a773bc156b92ccabeb60c8191c66f2e1924ca7de09fedc28ad413f0c3f37b63def3da58265a47c2ecf9292f51a858ebac523904511e24999aa3e43f5af6291584275d7b3b7a6512caac9d3b5447c116c4dd6abaff35438fd42a535bc210eca02b8a691111ffb176e3c05139fb3f31f50911c52639ab4dce0237c66cb218c84062bffd633a11511bad7b270537a2d12dba47d35c781edb0dd7ad88e03df09084b24fbfbab12707db6411211485e859eddce1a89038e7d9eb7dafad8</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        <h1 id="重量级锁（MutexLock）"><a href="#重量级锁（MutexLock）" class="headerlink" title="重量级锁（MutexLock）"></a>重量级锁（MutexLock）</h1><p>Synchronized 是通过对象内部的一个叫做监视器锁（monitor）来实现的。但是监视器锁本质又是依赖于底层的操作系统的 Mutex Lock 来实现的。而操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized 效率低的原因。因此，这种依赖于操作系统 Mutex Lock 所实现的锁我们称之为“重量级锁”。JDK 中对 Synchronized 做的种种优化，其核心都是为了减少这种重量级锁的使用。JDK1.6 以后，为了减少获得锁和释放锁所带来的性能消耗，提高性能，引入了“轻量级锁”和“偏向锁”。</p>
+
     </div>
 
     
@@ -319,6 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重量级锁（MutexLock）"><span class="nav-number">1.</span> <span class="nav-text">重量级锁（MutexLock）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

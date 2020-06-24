@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"shoufengsfsf.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="请输入密码查看.">
+  <meta name="description" content="Synchronized同步锁synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。 Synchronized 作用范围 作用于方法时，锁住的是对象的实例(this)；  当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Synchronized同步锁">
 <meta property="og:url" content="https://shoufengsfsf.github.io/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/index.html">
 <meta property="og:site_name" content="shoufengsfsf.github.io">
-<meta property="og:description" content="请输入密码查看.">
+<meta property="og:description" content="Synchronized同步锁synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。 Synchronized 作用范围 作用于方法时，锁住的是对象的实例(this)；  当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg">
 <meta property="article:published_time" content="2020-06-17T10:45:29.000Z">
 <meta property="article:modified_time" content="2020-06-18T07:49:21.166Z">
 <meta property="article:author" content="shoufeng">
 <meta property="article:tag" content="java锁">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg">
 
 <link rel="canonical" href="https://shoufengsfsf.github.io/2020/06/17/Synchronized%E5%90%8C%E6%AD%A5%E9%94%81/">
 
@@ -242,7 +244,55 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="d92c0dcd6cac0ca7bf09a797f03a4f40fe58dbe6c20e0a50ade519a73c759924">f930e103f07c6f71dd80207d9e13c73f73986d58060f965088c2126a05d91c413c29c0f721b503b477d08a0458b29f718ec0981baa965bc8f2e3b091125c4bda458c31c6c5f873b9d1e8e5787fc177c742429108d54b24a6b239a091d06158c0689905808b16cf8e9e2896d68d5ec5c3979031db98243fdeb1f74cc3011451da57f7bc21de1ac8358a7815fb2581e6a666aeb8b026a7c6e1d9af4513eb5dcf719ee2b934d7bc3cd50e602a9744d0c7e814a91979cba5f367041b8213df9f90711d6bfbdf20b915943554a9a43f246608526481be3370e9a34da3942a2c180adfc4cc82e01aba482266e914d75f55aa3b18f8732c4faa7c112801922c54d2311908af2de21acbc7c9931ba8257caaa6b3211ceb507c96b49cb8d561ca608b35443745098e21f8a980082052d0023f41e326067ce3c4cb06022551e5771689ff48a16f62d1f3d492f82a451990a6151f0b2e6789c390ffb0c58b703424f6b93e3bfbb9b7cf6a6be7679b50063ebc0a9a8796cbef62fe6500bcdec9945f21a3d1a8b616d8b5b306df5297d2d88f7ea7805713e7523d4a5b0dc459f38dfcd2835e702c9070c50540faae70bedee4aa7a20e4decf45a8e6b09e2afca500ff7385c55e4db179108ec4272582353614287c2f2c27f1e3337e9e17f82d4543f567986e0e9c3d216e97f1a5b06005a333369c60b3e678a9c07317775bd2787e8db49eb942a10d98376f2fa6dc6902efddf023253d0bca6a84eb76789c70c2c37243ec87d191d8498eb946441cdbaf225f9378d4d4a3d9478a27a5ac79e7ff7f42a6511c89b8f1dbff689f643e26c5f3462bac28f4ae4f979f80733c19a692889168f86bd037ff944752f7ffdaa4f760aaadca1135a3182534eff9f1bcd456b09b2ed4118ed18f6915592c81cb5baa247295bb87c531fce8c2335f3d2dfa58bbfc14a33d79414484433fffefd5116564f9088b44aaa7d4d05204975a4c1facbc08f3ceff24d8870831ec874e8a3048d748c608dbc70725c116c2d6dc272a35bf2cd57ff0e4d972ec96fa047b5a8ea0e2e562cb559bbe756169ecc445e387bf45e66aa160d66fc67c36dd280ce8b9a09a88d44b1cf253f0b14f90571c040aab14c9344d4d977d81d9ea73ca383b9b6ae96ff98a3628eb9de816ae50c2a60c1894f6e45c0c71805417fdae8b99b16f12052c9b017e6821b7f9c93cc95f19e64dbcf51b6e2c30dd170ed92296f7e6861b7df6b49212ec4982b5a6db53cc973ec21c222dbe9d7e269531e3757a7211d9b17f2ebc7f67d23fe25a32286820fb35664ec958562f7193aedbc4ce3503c3f49323abe447956901ee3b93c6437de4dc2ba2bc2e339b8b3daeccb9a15d2f6c7f262d4d74ba1114af54e206756be2e1dea4f5af0ef3ef870e0c0a64a592edcb20abb9c0368986aa8987ec75da2aeb69baf4ae08d497fbfc02dcb8617c8d78beac50069dc279d55d4679dea0b4bfe71c73089288a496cf1da994c98652ebea400cb448c0dc1bd299057e4e0a767a066dff0fe16f15e472fd4e8a7749e54b30f11ac419a6c1560ec657dedb0f191f8072b2433f0cfafb27c3603dd43f64ce314025b2f87d65a7c4d726b7c0adc432428ce811227413edc2b36ff29e7d890d729a0a4985645c911da4776525b165239ca5773e86837d651fbd0390c59d46a76a6cbf5f99c2a3aa5be7a509ac728fceb430d3e33e26fc6e013eb9e22dbc533d8f787b76ac46f3a43e1d4dbb20bfb30c467a0a143bc5ea57a498f83b2cf0bfc15510f0f4169f21144132f47b69ee387d676a6d871902a17047a5307d0ec865a83e92ca8126bb9147fbf8e52e4ac7d633ab822232164d436bc9e7eca9544b83bde11a752ecd54a44553fdb834b55b1e1d3894365879e7169b56f0fa5a0a3e7bed0c7c90ac7aff3e30a6d409ed9a9673d0cc797c51d1b07c8b9e21863c2e9ff8bd512215bd0da18f6cc0659fe8f3eebc83d77182dda7fa1de9e64c618927d0f32ea67bb460c8b5a48f2653c941bfb469fdc5702f4e658b5b0c0f0458e7a372a3b79747a38bf9c1551ec7f74870c5cdd7d655f162c3dd8239ec2bdcb3c38f3d54a3c0958370c144686e70006cf5114c16331d601c1756e5f95ce9ae90200851be7b1a7d3a0832e8f64f546c7593ba4f33a79400183d051b10c820967c8078283998eef14383284ca39c45384712d5c80d002fb9ca618edd04f1e7822177b7cf53aae412ccc246e4dcbcfd81ef98848983d4ed1bd4c790447f76aceabde0e647918469ead7da4dc6f75eb887722dbc6932f7ad622f7c7f916a36379200d72e41d5daa62cbba2e628b17ea44d04729fac3cc3508be31925f6c858d98df829260ba713ff71b56f91a60b753522f5b726dd8569f1cbcd9fda75216ce401c5b5d46081580b85415189dd08f9d02f35996616bb52116752591a430be27d2377f6f96148825bdd8d6d8a59e84cc267c43b727f2ee7d70df4d8d25395de667194e6cb9bf01f5f2db2f840588305ca7fc7f79fa7744c87e75e87f4998bc390aff0e69f5f66a00f975761b7c2793daa9dce3ecf3aad8be17f9957d91262fe0e63a8c68c1328aaced34759839c309cf8366c59f17ac11fba2a27afdcb5e793820c09b4faed862cdf6d870bae9292ed7e65666ba93df06cbcff2570ddf150d7c2235e998b430d0a03495b96e59d00577e4f1dc59ab3ec945c4283fefdbfee6850db9d419ac7bdd2366c6d209486b54c7499873e2e6257deb6875109f9242d4c8cdbaee82a5436242f818ddeef6b0f1b00094e6f9e51d0d040242d3a10894a98027db0ba4ce3bb8dd956c629ac1a4159a3625f466e326a0db6084402f26000618aae60802120c654a27306848e626e6ede9b9a1b16da6c97202e13da7a874a323f0afa156a2f01827d40d8290585b6eea70ba737ab2bd4ea6cde5ed1f2e7d15a6e846ae372f37eb7acb22e1beec629d2fac9aa42be28b3d4a59eabd6b60f4de86db141e51a40c4b015b07ec5ea3d026dadb290b9d53ba090f96f812c0af505c1033a5549d7adb4c99d49c31e77c07be7c312891800993a248c91adf55f5b0528caa5098a562e517ea9cf7c7b04fc1fec5abbd8476d3121259f56cb000d19b8ead182138f4eac64e7681d76b07cf58a65b0949d5357f47cf1bbf4fde41200b3f2244277c28f586aea4ddf715b0d7eb8650c7f845dce5101324a651db858f9ee82511b532075194d978672c89bc2cff761150090362002c63850ee763d866a3412506892e8180756ef1c064ebe87a7e089923ea9484c62f50d1460cef163ac7e65b5f666e3d37b80c467107fe668e92bb9c80c371d303eae4ee7677692b1fe8b0b95ad268a5b742f6c7af149bf6734c0aa29fc07ddf28e2a60962c72cdd8d919674fed5879fd2a31ca90be1f47584a1903d858f0fa2414bfd61961eb8ba8df0e9da481ba7304a7e7057f294057925010d740d7a07dfecddff34a147f59acc01cada1dda987a97e9da6ec7b721788a7206ae4eb66ef4701301079e266269f774d06d8c27c166d7f0722a37557f2c79cf652287bd0a276bcdafc36df55290c45ee945635e843a7aaab8c070fc1c4c6a1cb9123d4e66e7433aa465971a79ea20b4c8f39c14c9e52f4241d77d09b240763bea6d8f4d870cf8d2f6d04321277d57a5942bb632839d0875f3b9e125c5c908633bfe28044f75e2f5c11af0a885d8cc593f057ce64547bee6d07c996468b56df8f85556f18f56371409cd9c2c6540e2036398e3c4a6001e4a88a92ac6688b2818b0b0dff16dde1ad648be7d4d74e1a26b1167f07ebbc78e44252c61551c18132e43a27ea99c8ddea63e9f27df556a0ef46c88e644a98f037210f31d347e62650b70a0d128627c93aea8cbe036be82b6d6f2cc0e94d8efe7488d773464a66f71625ea57367bc40ff7bb673c28311ca3bbe53ed1c160f60acd0a8cb9162bdc83c9f69cf25f9910188570ea4feaf9963cc4b4f0034590557c17585564f64522efe40502365c6d572e627df8d844e05029683c91b4984245894508626e999de78251a51a00caa05d299117acfc30ab25488f24c3956b11cb44ba074aaa8a10ad7b61808a3f03a46ca3c079f7a0a31cd9490de1b64cf82719f9effe9c4a0c02bdfec4a99a67bf75505fc8f2b9d7a3185fcd2c53f7d7f72302840066f0d986765ef27c5f461b91b6cc452e92bc21c843368500e58c9d1e24b81c2de1424c4e53b3fe9a9966bf6fc1c4a9bd2b2450491e2f87698cb49ef84f926e34cbbe505bd2434810c22e634ddabb0a18ffda82b0fb3432bccbf11df4d3bec9d9629f65073322ea793c5ef98dfdaa3df8db669f5f0f8d3b0636b8e314b79470e183ec71eb6b3fb959880ad6f91fec4345b6e1062f6364a3646fcfa811e8154efee397db20dde22911dd8f4e1404ad396efe9eff3913fd174276dc2923dea5e3b332dd168330e02ced3b5343a71b066c8ef9e7fe837b3b41837298c17e80cd98464597d6d158c0d185843fc5dd28eddb18b851b60e232b544c5a88ef150fd8b0b3a26b1633485d2dd56a7dbf416e84e740f934bb47130844285781a8974cee1de7137d76936802430c9d33e25ea3ad56553a4109f1c53b6b47c8f70aa749b7675774cdc11b9a374eeb3b2bc8373cad7e2c8363f306b34e7c6b52e5caabd3eae80611efb71bb0a794db42acd13d5fe56704930efe34b258c01002ce1edb345a62a206ee307e92e1c56a2e6cd71fbf829f3ed64da51e5ce1e51a0003f262ef10e85f524ff08affdaee3f3c49305ba25307efd4f7e7912c6295fd8ebda01620a1e1cf59f412b3f56359a6b80465f8c8bd668c15819d4f829c8385be13f837736fd0bb7788d06f47ceefaa06a95640b53d29d6f054ba077705541852d04e4f492c7c5471a476075b14b73602a536806caf3054f4630e242916b1c0613993ed7d5e58a50cf3d8bb471961189540ed9293ef9ad3dbebcd4761fa031becc3204f410b981bfa701b0277105bb287df76aade3292ef5b3f3edd02c46b6bc579a475ddd233e055781f7cefe619ce16bd160e6ed1d28512c5e4e85a75696a88b0ffc80d9f1d9ce2703b6c65730e83449ca3c9daf0ef88f600fc7227c3fa9c54e05eabc83884c2031c11ee67ff5e107bd7f20ab7528e15b9af0be06d15214169ce8cee90e031c998f1c338a51a1efd5981e473eeb4a612f2b47ab2ea80b65e0c4f331c79a59ed1f31c1aa5f1b1b0e8803fd06ff1a8045045d675cd02323d6dd9137ee1891267dc436caad766225cdd17885a9980f8670b55309183afefdec4a85d7376be58d6503e94a7232e28611843f643136959705d5fd15a42c9cc648db8d33abdd393be7f64cf201a820c171ca81ec9e738c4e542e4a68e95edc7c4d63392102debdcd544d45c24f5d9197fa26cf97ff35da98ca5ddd0603b4c6bff40dce281bd093a0f7c0e7f088a3c3d541acc8cc4b646a0baca26b2f4060fe03ccdb87f6f8b7f180c0a8a7c521f25eae0df1de928f7aa9098f7eca37336893d2a6362f9e04a865a4efbe19f03aab4968d81ad56d551e94ef94414d47c2edc479a979f984596dcd152f28f9ca8f5c730a1cf539aaa0100dda038e2bb180b20c3cbdefbc301e7ef540887d943aa8dab44446a45507d1584c7ce22cb75ff52893d2fb19874e63b45ce2101fbba835da479fa0fb8bbd84bf9182948a4ebf71d60ad48dddbcad807ebdfc8b583f8aad53ed331d4133f5500110b895262114f5a628858c8e92186536f8652b2b1c665262e20022bc1dc91aa6fcd3e4ccb5d9aab7d2b1cd8edc89b76b0edea42b1221f8c6ed6358410190d0f725ab633e50a73822cebc291ce7675bedb710c110bff5b5ed124a4aba64139c4afab2e8e32ad4afe79e7a70fc5e243cd0647ece6de6201654e11feb1c25c6bc394f2396faac83c56da014c080f7c04b544e00395a85a414fc48cde04c171319b0bb368102332e62e47ce5f452d66a825199ac355af94af94b93a4fa7e7841c7e69a2183361e88a05d779fff63799dee0137e1af6bbd62a7fad1619043e6f7e9e86e6e50cb7ae3716014eaa4f7bb094d5604c6e65ca7e2b84c721df9a529b42576258207ee0d7ced4aaefcb97f52eaa4a6f2124141c2766dd2a6fcb2599b183e2ff01346a2aee498f9335ac63b8d6f1e64b037c23c3a8a6beffd0a807dac7d5948ad1de79513b5540215aecccc6ecff12e16e3b51fc97eff0046c3b4e8dbd5cda8f3fb371bf529075c2c1b1eaecdbbd4b85f489d2846b134471f3fdde232af943f5fac87fe940c14d7168ae766c7b40d7400ba7f208d8b77d6582a7473ad7701f1a3e1f4c8e3c7d242a00f2f9a20e4c153c3307375045aec5fddfe9aa98bc23c06f70394111fff20c0ecfde4fa63c18e8468b057fbaecbeb9bd466570f2b605b444f93941abdf063d6083af77958a52dc3620e92cc2d13ab409ea19a37c98d2bb90294c091fe20d2835967081862bbf9c75786967a32782895ba9753651f72bf343c5f70e72a3cbec25bae7b88d208c8087791d34685d5f7cb7dc96af3107b3e7e1488d7967763f628c98147bef9da31004b0c419e13a2861cc37eaac7f5e37b1836683aec0dfa84142fcfff2a23fce33527ef56acfbcd65c00b20dbfce65e1007b69b192eccfc4e44c2975b031d3461f0251198f76df352339d6ed00570840d8587d46cf799a7f0e30ab0d33eeff66ecfde8882491d89cc8d9c39832960d5d483fa73d74c0fc74852aad4b87c561a86ce3745869919c37fef028cf749f072cece11e1abdba529044151ef503730a04ba6ab15e4c249df7aee7a956ffc94bba967e9fcce523a6d63ff24d4d7b05cb8d3c48cd434d18970abb57905f3bf956551c50852696ed848f71705e941542485c74c724bf3f92b3bdf56c5022cdb83d0e98916a3e8df61292d66c61582dcc2046f9d2a27a0b55374c6c041473a05b07f76b6351f856dd20cb4e330b1c2e919c8d1141b5948597a7156a8c1d928bdd750b6833a18a5d9364adab6bd357d3438497d78d6086904b1f6a49806013672be99c6b69464de041eb0943c3a309a5bf9766964c48e2aa912f51b015035e3ee0e1e890535f249e17f43c4ba74f8e79b3a7c336726249b4b421f63416820ee6970b48d587ee3af3034873c558f677d1b470f46b824a0fce3d0ba7f46a58e4a5ca9a61971b00b4d246cdc3bbbd381b3c60e2f2cb</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        <h1 id="Synchronized同步锁"><a href="#Synchronized同步锁" class="headerlink" title="Synchronized同步锁"></a>Synchronized同步锁</h1><p>synchronized 它可以把任意一个非 NULL 的对象当作锁。他属于独占式的悲观锁，同时属于可重入锁。</p>
+<h2 id="Synchronized-作用范围"><a href="#Synchronized-作用范围" class="headerlink" title="Synchronized 作用范围"></a><strong>Synchronized</strong> <strong>作用范围</strong></h2><ol>
+<li><p>作用于方法时，锁住的是对象的实例(this)；</p>
+</li>
+<li><p>当作用于静态方法时，锁住的是Class实例，又因为Class的相关数据存储在永久带PermGen（jdk1.8 则是 metaspace），永久带是全局共享的，因此静态方法锁相当于类的一个全局锁，会锁所有调用该方法的线程；</p>
+</li>
+<li><p>synchronized 作用于一个对象实例时，锁住的是所有以该对象为锁的代码块。它有多个队列，当多个线程一起访问某个对象监视器的时候，对象监视器会将这些线程存储在不同的容器中。</p>
+</li>
+</ol>
+<h2 id="Synchronized-核心组件"><a href="#Synchronized-核心组件" class="headerlink" title="Synchronized 核心组件"></a><strong>Synchronized</strong> <strong>核心组件</strong></h2><ol>
+<li><p>Wait Set：哪些调用 wait 方法被阻塞的线程被放置在这里；</p>
+</li>
+<li><p>Contention List：竞争队列，所有请求锁的线程首先被放在这个竞争队列中；</p>
+</li>
+<li><p>Entry List：Contention List 中那些有资格成为候选资源的线程被移动到 Entry List 中；</p>
+</li>
+<li><p>OnDeck：任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为 OnDeck；</p>
+</li>
+<li><p>Owner：当前已经获取到所资源的线程被称为 Owner；</p>
+</li>
+<li><p>!Owner：当前释放锁的线程。</p>
+</li>
+</ol>
+<h2 id="Synchronized-实现"><a href="#Synchronized-实现" class="headerlink" title="Synchronized 实现"></a><strong>Synchronized</strong> <strong>实现</strong></h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfwhot9cepj317s0jstod.jpg" alt="image-20200618154736405"></p>
+<ol>
+<li><p>JVM 每次从队列的尾部取出一个数据用于锁竞争候选者（OnDeck），但是并发情况下，ContentionList 会被大量的并发线程进行 CAS 访问，为了降低对尾部元素的竞争，JVM 会将一部分线程移动到 EntryList 中作为候选竞争线程。</p>
+</li>
+<li><p>Owner 线程会在 unlock 时，将 ContentionList 中的部分线程迁移到 EntryList 中，并指定EntryList 中的某个线程为 OnDeck 线程（一般是最先进去的那个线程）。</p>
+</li>
+<li><p>Owner 线程并不直接把锁传递给 OnDeck 线程，而是把锁竞争的权利交给 OnDeck，OnDeck 需要重新竞争锁。这样虽然牺牲了一些公平性，但是能极大的提升系统的吞吐量，在JVM 中，也把这种选择行为称之为“竞争切换”。</p>
+</li>
+<li><p>OnDeck 线程获取到锁资源后会变为 Owner 线程，而没有得到锁资源的仍然停留在 EntryList中。如果 Owner 线程被 wait 方法阻塞，则转移到 WaitSet 队列中，直到某个时刻通过 notify或者 notifyAll 唤醒，会重新进去 EntryList 中。</p>
+</li>
+<li><p>处于 ContentionList、EntryList、WaitSet 中的线程都处于阻塞状态，该阻塞是由操作系统来完成的（Linux 内核下采用 pthread_mutex_lock 内核函数实现的）。</p>
+</li>
+<li><p>Synchronized 是非公平锁。 Synchronized 在线程进入 ContentionList 时，等待的线程会先尝试自旋获取锁，如果获取不到就进入 ContentionList，这明显对于已经进入队列的线程是不公平的，还有一个不公平的事情就是自旋获取锁的线程还可能直接抢占 OnDeck 线程的锁资源。参考：<a href="https://blog.csdn.net/zqz_zqz/article/details/70233767" target="_blank" rel="noopener">https://blog.csdn.net/zqz_zqz/article/details/70233767</a></p>
+</li>
+<li><p>每个对象都有个 monitor 对象，加锁就是在竞争 monitor 对象，代码块加锁是在前后分别加上 monitorenter 和 monitorexit 指令来实现的，方法加锁是通过一个标记位来判断的</p>
+</li>
+<li><p>synchronized 是一个重量级操作，需要调用操作系统相关接口，性能是低效的，有可能给线程加锁消耗的时间比有用操作消耗的时间更多。</p>
+</li>
+<li><p>Java1.6，synchronized 进行了很多的优化，有适应自旋、锁消除、锁粗化、轻量级锁及偏向锁等，效率有了本质上的提高。在之后推出的 Java1.7 与 1.8 中，均对该关键字的实现机理做了优化。引入了偏向锁和轻量级锁。都是在对象头中有标记位，不需要经过操作系统加锁。</p>
+</li>
+<li><p>锁可以从偏向锁升级到轻量级锁，再升级到重量级锁。这种升级过程叫做锁膨胀；</p>
+</li>
+<li><p>JDK 1.6 中默认是开启偏向锁和轻量级锁，可以通过-XX:-UseBiasedLocking 来禁用偏向锁。</p>
+</li>
+</ol>
+
     </div>
 
     
@@ -325,6 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronized同步锁"><span class="nav-number">1.</span> <span class="nav-text">Synchronized同步锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Synchronized-作用范围"><span class="nav-number">1.1.</span> <span class="nav-text">Synchronized 作用范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Synchronized-核心组件"><span class="nav-number">1.2.</span> <span class="nav-text">Synchronized 核心组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Synchronized-实现"><span class="nav-number">1.3.</span> <span class="nav-text">Synchronized 实现</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
